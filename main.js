@@ -1,11 +1,9 @@
-var canvas, ctx, width, height;
-
 class Animator {
     constructor () {
         this.frame      = 0;
         this.current    = "";
         this.anim_state = 0;
-        this.animations = {[]};
+        this.animations = {};
     }
 
     set_current_animation (name) {
@@ -24,7 +22,7 @@ class Animator {
             this.add_animation(animation);
             console.warn('no such animation: "${animation}", creating new...');
         }
-        img = new Image();
+        let img = new Image();
         img.onload = () => {
             this.animations[animation].push(img);
         };
@@ -32,16 +30,16 @@ class Animator {
     }
 
     next_frame () {
-        if (frame <= this.animations[this.current].length) {
-            frame++;
+        if (this.frame <= this.animations[this.current].length) {
+            this.frame++;
         } else {
-            frame = 0;
+           this.frame = 0;
         }
     }
 
     prev_frame () {
-        if (frame > 0) {
-            frame--;
+        if (this.frame > 0) {
+            this.frame--;
         }
     }
 
@@ -62,7 +60,7 @@ class GameObject {
 
     create_animator () {
         this.animator = new Animator();
-        this.textured = true;
+        this.animated = true;
     }
     
     draw (ctx) {
@@ -74,21 +72,13 @@ class GameObject {
                           this.x,this.y);
         }
     }
-
-    update () {
-    }
 }
 
 class Player extends GameObject{
-    constructor (x, y) {
-        this.x = x;
-        this.y = y;
+    constructor (x, y, w, h) {
+        super(x,y,w,h);
         this.xspd = 0;
         this.yspd = 0;
-        this.width = 100;
-        this.height = 100;
-        this.sprite = "nada por enq";
-        
 
         document.addEventListener('keydown',(e) => {
             if (e.key == "ArrowLeft") {
@@ -106,10 +96,10 @@ class Player extends GameObject{
             }
         });
         document.addEventListener('keyup',(e) => {
-            if (e.key == "ArrowLeft" || this.xstep == LEFT) {
+            if (e.key == "ArrowLeft") {
                 this.xspd = 0;
             }
-            if (e.key == "ArrowRight" || this.xstep == RIGHT) {
+            if (e.key == "ArrowRight") {
                 this.xspd = 0;
             }
             
@@ -117,11 +107,6 @@ class Player extends GameObject{
                 this.yspd = 0;
             }
         });
-    }
-
-    draw(ctx) {
-        ctx.fillStyle = 'rgb(200, 0, 0)';
-        ctx.fillRect(this.x, this.y, 100, 100);
     }
 
     update() {
@@ -147,48 +132,44 @@ class Game {
 
         this.canvas.width = this.width;
         this.canvas.height = this.height;
-
-    }
-
-    /**
-     * função foda que gera os bagulho
-     */
-
-    
-    gameLoop() {
-        this.draw(this.ctx);
-        for (let ent of this.entities) {
-            ent.draw(this.ctx);
-            ent.update();
-        }
-
-        window.requestAnimationFrame(game.gameLoop);
-        
-    }
+    }    
 
     draw(ctx) {
         ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
         ctx.fillRect(0, 0, this.width, this.height);
     }
 
+    gameLoop() {
+        if (this === undefined) {
+            return undefined;
+        }
+        this.draw(this.ctx);
+        for (let ent of this.entities) {
+            ent.draw(this.ctx);
+            ent.update();
+        }
+
+        window.requestAnimationFrame(this.gameLoop); 
+    }
+
     main() {
         this.canvas.style.border = "1px solid #000";
 
-        document.body.appendChild(this.canvas);
+        document.body.appendChild(this.canvas);    
         
-        setInterval(this.gameLoop.bind(this), 1000/60);
-    }
+        let gameLoop_w_this = this.gameLoop.bind(this);
 
-    
+        setInterval(gameLoop_w_this,1000/60);
+    } 
 }
 
 var game = new Game();
-var player = new Player(10,20);
+var player = new Player(10,20,100,100);
+
+player.create_animator();
+player.animator.add_frame("top.png","idle");
+player.animator.set_current_animation("idle");
+
 game.entities.push(player);
 
 game.main()
-
-
-
-
-// TODO: function load_sprite
