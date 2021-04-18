@@ -1,29 +1,46 @@
 var canvas, ctx, width, height;
 
+const LEFT = -10;
+const RIGHT = 10;
+const UP = -10;
+const DOWN = 10;
+
 class Player {
     constructor (x, y) {
         this.x = x;
         this.y = y;
+        this.xspd = 0;
+        this.yspd = 0;
         this.width = 100;
         this.height = 100;
         this.sprite = "nada por enq";
         
 
         document.addEventListener('keydown',(e) => {
-            switch (e.key) { // vsfd deprecated meu pau
-                case "ArrowLeft":
-                    this.x -= 10;
-                    
-                break;
-                case "ArrowRight":
-                    this.x += 10;
-                break;
-                case "ArrowDown":
-                    this.y -= 10;
-                break;
-                case "ArrowUp":
-                    this.y += 10;
-                break;
+            if (e.key == "ArrowLeft") {
+                this.xspd = -10;
+            }
+            if (e.key == "ArrowRight") {
+                this.xspd = 10;
+            }
+            
+            if (e.key == "ArrowDown") {
+                this.yspd = 10;
+            }
+            if (e.key == "ArrowUp") {
+                this.yspd = -10;
+            }
+        });
+        document.addEventListener('keyup',(e) => {
+            if (e.key == "ArrowLeft" && this.xstep == LEFT) {
+                this.xspd = 0;
+            }
+            if (e.key == "ArrowRight" && this.xstep == RIGHT) {
+                this.xspd = 0;
+            }
+            
+            if (e.key == "ArrowDown" || e.key == "ArrowUp") {
+                this.yspd = 0;
             }
         });
     }
@@ -36,8 +53,8 @@ class Player {
     }
 
     update() {
-        // this.x += 10;
-        // this.y += 10;
+        this.x += this.xspd;
+        this.y += this.yspd;
     }
 }
 
