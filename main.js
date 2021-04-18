@@ -1,9 +1,57 @@
 var canvas, ctx, width, height;
 
-const LEFT = -10;
-const RIGHT = 10;
-const UP = -10;
-const DOWN = 10;
+class Ent {
+    constructor (x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.frame = 0;
+        this.anim_state = 0;
+        this.current = "";
+        this.textured = false;
+        this.animations = {[]};
+    }
+    
+    set_current_animation (name) {
+        if (!(name in this.animations)) {
+            throw new Error('no such animation: "${name}"');
+        }
+        this.current = name;
+    }
+
+    add_animation (name) {
+        this.animations[name] = [];
+    }
+
+    add_frame (imgsrc, animation) {
+        if (!(animation in this.animations)) {
+            this.add_animation(animation);
+            console.warn('no such animation: "${animation}", creating new...');
+        }
+        img = new Image();
+        img.onload = () => {
+            this.animations[animation].push(img);
+            this.w = img.width;
+            this.h = img.height;
+        };
+        img.src = imgsrc;
+    }
+
+    draw (ctx) {
+        if (!this.textured) {
+            ctx.fillStyle = 'rgb(200, 0, 0)';
+            ctx.fillRect(this.x, this.y, this.w, this.h);
+        } else {
+            ctx.drawImage(this.animations[this.current][this.frame],
+                          this.x,this.y);
+        }
+    }
+
+    update () {
+
+    }
+}
 
 class Player {
     constructor (x, y) {
@@ -32,10 +80,10 @@ class Player {
             }
         });
         document.addEventListener('keyup',(e) => {
-            if (e.key == "ArrowLeft" && this.xstep == LEFT) {
+            if (e.key == "ArrowLeft" || this.xstep == LEFT) {
                 this.xspd = 0;
             }
-            if (e.key == "ArrowRight" && this.xstep == RIGHT) {
+            if (e.key == "ArrowRight" || this.xstep == RIGHT) {
                 this.xspd = 0;
             }
             
@@ -46,8 +94,6 @@ class Player {
     }
 
     draw(ctx) {
-        // vou testar um desenho
-        // pera
         ctx.fillStyle = 'rgb(200, 0, 0)';
         ctx.fillRect(this.x, this.y, 100, 100);
     }
