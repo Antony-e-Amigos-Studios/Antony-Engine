@@ -4,24 +4,19 @@ class GameObject {
         this.y = y;
         this.w = w;
         this.h = h;
-        this.animator = undefined;
-        this.textured = false;
-        this.onUpdate = [];
+        this.componentList = [];
     }
 
-    create_animator() {
-        this.animator = new Animator();
-        this.animated = true;
+    add_component(component) {
+
     }
 
-    draw(ctx) {
-        if (!this.animated) {
-            ctx.fillStyle = 'rgb(200, 0, 0)';
-            ctx.fillRect(this.x, this.y, this.w, this.h);
-        } else {
-            ctx.drawImage(this.animator.get_frame(),
-                this.x, this.y);
-        }
+    draw() {
+
+    }
+
+    update() {
+        
     }
 
     // Getters and setters

@@ -35,6 +35,16 @@ class Player extends GameObject {
         });
     }
 
+    draw(ctx) {
+        if (!this.animated) {
+            ctx.fillStyle = 'rgb(200, 0, 0)';
+            ctx.fillRect(this.x, this.y, this.w, this.h);
+        } else {
+            ctx.drawImage(this.animator.get_frame(),
+                this.x, this.y);
+        }
+    }
+
     update() {
         this.x += this.xspd;
         this.y += this.yspd;
