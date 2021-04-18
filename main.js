@@ -25,12 +25,13 @@ class Animator {
         let img = new Image();
         img.onload = () => {
             this.animations[animation].push(img);
+            console.log("Loaded");
         };
         img.src = imgsrc;
     }
 
     next_frame () {
-        if (this.frame <= this.animations[this.current].length) {
+        if (this.frame < this.animations[this.current].length-1) {
             this.frame++;
         } else {
            this.frame = 0;
@@ -56,6 +57,7 @@ class GameObject {
         this.h = h;
         this.animator = undefined;
         this.textured = false;
+        this.onUpdate = [];
     }
 
     create_animator () {
@@ -79,6 +81,8 @@ class Player extends GameObject{
         super(x,y,w,h);
         this.xspd = 0;
         this.yspd = 0;
+
+        this.frame_counter = 0;
 
         document.addEventListener('keydown',(e) => {
             if (e.key == "ArrowLeft") {
@@ -112,6 +116,11 @@ class Player extends GameObject{
     update() {
         this.x += this.xspd;
         this.y += this.yspd;
+        this.frame_counter += 0.01;
+        if (Math.floor(this.frame_counter) == 1) {
+            this.animator.next_frame();
+            this.frame_counter = 0;
+        }
     }
 }
 
@@ -157,9 +166,7 @@ class Game {
 
         document.body.appendChild(this.canvas);    
         
-        let gameLoop_w_this = this.gameLoop.bind(this);
-
-        setInterval(gameLoop_w_this,1000/60);
+        setInterval(this.gameLoop.bind(this),1000/60);
     } 
 }
 
@@ -168,8 +175,8 @@ var player = new Player(10,20,100,100);
 
 player.create_animator();
 player.animator.add_frame("top.png","idle");
+player.animator.add_frame("top2.png", "idle");
 player.animator.set_current_animation("idle");
 
 game.entities.push(player);
-
 game.main()
