@@ -1,18 +1,13 @@
 var canvas, ctx, width, height;
 
-class Ent {
-    constructor (x, y, w, h) {
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
-        this.frame = 0;
+class Animator {
+    constructor () {
+        this.frame      = 0;
+        this.current    = "";
         this.anim_state = 0;
-        this.current = "";
-        this.textured = false;
         this.animations = {[]};
     }
-    
+
     set_current_animation (name) {
         if (!(name in this.animations)) {
             throw new Error('no such animation: "${name}"');
@@ -32,28 +27,59 @@ class Ent {
         img = new Image();
         img.onload = () => {
             this.animations[animation].push(img);
-            this.w = img.width;
-            this.h = img.height;
         };
         img.src = imgsrc;
     }
 
+    next_frame () {
+        if (frame <= this.animations[this.current].length) {
+            frame++;
+        } else {
+            frame = 0;
+        }
+    }
+
+    prev_frame () {
+        if (frame > 0) {
+            frame--;
+        }
+    }
+
+    get_frame () {
+        return this.animations[this.current][this.frame];
+    }
+}
+
+class GameObject {
+    constructor (x, y, w, h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.animator = undefined;
+        this.textured = false;
+    }
+
+    create_animator () {
+        this.animator = new Animator();
+        this.textured = true;
+    }
+    
     draw (ctx) {
-        if (!this.textured) {
+        if (!this.animated) {
             ctx.fillStyle = 'rgb(200, 0, 0)';
             ctx.fillRect(this.x, this.y, this.w, this.h);
         } else {
-            ctx.drawImage(this.animations[this.current][this.frame],
+            ctx.drawImage(this.animator.get_frame(),
                           this.x,this.y);
         }
     }
 
     update () {
-
     }
 }
 
-class Player {
+class Player extends GameObject{
     constructor (x, y) {
         this.x = x;
         this.y = y;
