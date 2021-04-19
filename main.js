@@ -18,5 +18,21 @@ var sprt_top2 = new Sprite("top2.png", load_callback);
 player.get("animator").set_velocity(10);
 player.get("animator").play();
 
+var tileManager = new TileManager();
+
+var sprt_tile1 = new Sprite("tile1.png", (img) => {
+    tileManager.set(1, new Tile(img, "grama"));
+});
+
+var mapMatrix = [
+    [1, 1, 1],
+    [0, 0, 0],
+    [1, 0, 0]
+]
+
+var mapa = new Map(mapMatrix, tileManager, game);
+
+mapa.generateMap();
+
 game.add_entity(player);
 game.main()

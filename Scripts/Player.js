@@ -18,6 +18,10 @@ class Player extends GameObject {
             if (e.key == "ArrowUp") {
                 this.yspd = -10;
             }
+            // if (this.xspd != 0 && this.yspd != 0) {
+            //     this.xspd /= 1.4141;
+            //     this.yspd /= 1.4141;
+            // }
         });
         document.addEventListener('keyup', (e) => {
             if (e.key == "ArrowLeft" || e.key == "ArrowRight") {
