@@ -20,13 +20,9 @@ class Player extends GameObject {
             }
         });
         document.addEventListener('keyup', (e) => {
-            if (e.key == "ArrowLeft") {
+            if (e.key == "ArrowLeft" || e.key == "ArrowRight") {
                 this.xspd = 0;
             }
-            if (e.key == "ArrowRight") {
-                this.xspd = 0;
-            }
-
             if (e.key == "ArrowDown" || e.key == "ArrowUp") {
                 this.yspd = 0;
             }

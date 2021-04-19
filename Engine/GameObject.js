@@ -1,9 +1,10 @@
 class GameObject {
-    constructor(x, y, w, h) {
+    constructor(x, y, w, h, name) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
+        this.name = name;
         this.components = {};
     }
 
@@ -19,6 +20,14 @@ class GameObject {
         for (let comp of Object.keys(this.components)) {
             this.components[comp].update(ctx, this);
         }
+    }
+
+    component(cname) {
+        
+    }
+
+    clone() {
+        return this;
     }
 
     // Getters and setters

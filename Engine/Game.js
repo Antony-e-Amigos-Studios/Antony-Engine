@@ -9,6 +9,8 @@ class Game {
         this.xspd = 0;
         this.yspd = 0;
         this.entities = [];
+        this.scenes = {};
+        this.scene = "";
         this.canvas = document.createElement("canvas");
         this.ctx = this.canvas.getContext("2d");
         this.width = window.innerWidth;
@@ -32,10 +34,12 @@ class Game {
         if (this === undefined) {
             return undefined;
         }
-        this.draw(this.ctx); // sim agora olha a função update da entidade
+        this.draw(this.ctx); // apaguei essa linha sem qrer fds
         for (let ent of this.entities) {
-            ent.update();
-            ent.update_components(this.ctx);
+            if (ent.name in this.scenes[this.scene].map.entities) {
+                ent.update();
+                ent.update_components(this.ctx);
+            }
         }
 
         window.requestAnimationFrame(this.gameLoop);
@@ -47,5 +51,13 @@ class Game {
         document.body.appendChild(this.canvas);
 
         setInterval(this.gameLoop.bind(this), 1000 / 60);
+    }
+
+    create_scene(name, scene) {
+        this.scenes[name] = scene;
+    }
+
+    select_scene(name) {
+        this.scene = name;
     }
 }

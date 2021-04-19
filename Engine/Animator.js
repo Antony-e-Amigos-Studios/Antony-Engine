@@ -9,6 +9,7 @@ class Animator extends Component {
         this.playing = false;
         this.vel = 1;
         this.inc = this.vel / 100;
+        this.onimgload = () => {return 0};
     }
 
     set_current_animation(name) {
@@ -30,9 +31,18 @@ class Animator extends Component {
         let img = new Image();
         img.onload = () => {
             this.animations[animation].push(img);
+            this.onimgload();
             console.log("Loaded");
         };
         img.src = imgsrc;
+    }
+
+    add_loaded_frame(img, animation) {
+        if (!(animation in this.animations)) {
+            this.add_animation(animation);
+            console.warn('no such animation: "${animation}", creating new...');
+        }
+        this.animations[animation].push(img);
     }
 
     next_frame() {
@@ -61,6 +71,13 @@ class Animator extends Component {
         }
     }
 
+    adjust_size(gameobj) {
+        let img = this.get_frame();
+        gameobj.w = img.width;
+        gameobj.h = img.height;
+    }
+
+    
     update(ctx, parent) {
         if (this.get_frame() !== undefined && parent !== undefined) {
             ctx.drawImage(this.get_frame(), parent.x, parent.y);
