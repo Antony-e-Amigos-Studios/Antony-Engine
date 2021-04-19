@@ -4,8 +4,6 @@ class Player extends GameObject {
         this.xspd = 0;
         this.yspd = 0;
 
-        this.frame_counter = 0;
-
         document.addEventListener('keydown', (e) => {
             if (e.key == "ArrowLeft") {
                 this.xspd = -10;
@@ -38,10 +36,5 @@ class Player extends GameObject {
     update() {
         this.x += this.xspd;
         this.y += this.yspd;
-        this.frame_counter += 0.01;
-        if (Math.floor(this.frame_counter) == 1) {
-            this.components["animator"].next_frame();
-            this.frame_counter = 0;
-        }
     }
 }

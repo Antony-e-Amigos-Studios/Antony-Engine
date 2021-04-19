@@ -8,6 +8,7 @@ class Animator extends Component {
         this.counter = 0;
         this.playing = false;
         this.vel = 1;
+        this.inc = this.vel / 100;
     }
 
     set_current_animation(name) {
@@ -53,7 +54,7 @@ class Animator extends Component {
     }
 
     update_frame() {
-        this.counter += this.vel / 100;
+        this.counter += this.inc;
         if (Math.floor(this.counter) == 1) {
             this.next_frame();
             this.counter = 0;
@@ -79,5 +80,6 @@ class Animator extends Component {
 
     set_velocity(val) {
         this.vel = val;
+        this.inc = this.vel / 100;
     }
 }
