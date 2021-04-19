@@ -1,7 +1,6 @@
 /**
- * acho que vc ta lagado pra caralho puta merda
  * gustavo é furry
- */ // VO ALMOCA ESPERE, DA COMMIT LOGO TCHAU volto ja
+ */
 class TileManager {
     constructor(initial = {}) {
         this.mapper = initial;

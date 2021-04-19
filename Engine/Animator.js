@@ -69,7 +69,6 @@ class Animator extends Component {
         gameobj.w = img.width;
         gameobj.h = img.height;
     }
-
     
     update(ctx, parent) {
         if (this.get_frame() !== undefined && parent !== undefined) {

@@ -47,6 +47,16 @@ class Game {
         this.entities.push(entity);
     }
 
+    create_scene(name, scene) {
+        this.scenes[name] = scene;
+    }
+
+    set_current_scene(name) {
+        if (name in this.scenes) { // if key exists
+            this.scene = name;
+        }
+    }
+
     main() {
         this.canvas.style.border = "1px solid #000";
 

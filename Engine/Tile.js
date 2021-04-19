@@ -1,15 +1,16 @@
 class Tile extends GameObject {
     constructor(texture, name) {
-        super(0,0,0,0);
+        super(0, 0, 0, 0);
         this.name = name;
 
-        this.add_component("animator");
+        this.add_component("animator", new Animator());
         this.get("animator").add_frame(texture, "0");
         this.get("animator").set_current_animation("0");
         this.get("animator").adjust_size(this);
     }
 
     draw(ctx) {
+        console.log("here");
         this.get("animator").update(ctx, this); // updating the animator == drawing
     }
 
