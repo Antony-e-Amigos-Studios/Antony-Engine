@@ -2,7 +2,10 @@ class Component {
     constructor() {
 
     }
-    update(gameobj) {
-        gameobj.update();
+    update(_gameobj) {
+    }
+
+    copy() {
+        return this;
     }
 }

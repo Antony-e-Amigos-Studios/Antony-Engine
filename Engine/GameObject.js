@@ -8,7 +8,19 @@ class GameObject {
     }
 
     add_component(component) {
+        this.componentList.push(component);
+    }
 
+    copy_component_list() {
+        return this.componentList;
+    }
+
+    update_components() {
+        let i = 0;
+        while (i < this.componentList.length) {
+            this.componentList[i].update(this);
+            i++;
+        }
     }
 
     draw() {
@@ -16,7 +28,7 @@ class GameObject {
     }
 
     update() {
-        
+
     }
 
     // Getters and setters

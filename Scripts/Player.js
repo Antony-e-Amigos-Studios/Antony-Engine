@@ -33,25 +33,17 @@ class Player extends GameObject {
                 this.yspd = 0;
             }
         });
+
+
+        this.add_component(new Animator);
     }
 
-    draw(ctx) {
-        if (!this.animated) {
-            ctx.fillStyle = 'rgb(200, 0, 0)';
-            ctx.fillRect(this.x, this.y, this.w, this.h);
-        } else {
-            ctx.drawImage(this.animator.get_frame(),
-                this.x, this.y);
-        }
-    }
-
+    draw() { }
+    
     update() {
-        this.x += this.xspd;
-        this.y += this.yspd;
-        this.frame_counter += 0.01;
-        if (Math.floor(this.frame_counter) == 1) {
-            this.animator.next_frame();
-            this.frame_counter = 0;
-        }
+        this.update_components(); // isso aqui atualiza os componentes (só tem um que é o animator)
+        this.componentList.
     }
+    
+
 }

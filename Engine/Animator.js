@@ -1,5 +1,6 @@
-class Animator {
+class Animator extends Component {
     constructor() {
+        super();
         this.frame = 0;
         this.current = "";
         this.anim_state = 0;
@@ -46,5 +47,10 @@ class Animator {
 
     get_frame() {
         return this.animations[this.current][this.frame];
+    }
+
+
+    update(gameobj) {
+        // console.log(gameobj);
     }
 }
