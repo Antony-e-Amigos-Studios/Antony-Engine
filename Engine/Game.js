@@ -36,13 +36,15 @@ class Game {
         }
         this.draw(this.ctx); // apaguei essa linha sem qrer fds
         for (let ent of this.entities) {
-            if (ent.name in this.scenes[this.scene].map.entities) {
-                ent.update();
-                ent.update_components(this.ctx);
-            }
+            ent.update();
+            ent.update_components(this.ctx);
         }
 
         window.requestAnimationFrame(this.gameLoop);
+    }
+
+    add_entity(entity) {
+        this.entities.push(entity);
     }
 
     main() {
@@ -51,13 +53,5 @@ class Game {
         document.body.appendChild(this.canvas);
 
         setInterval(this.gameLoop.bind(this), 1000 / 60);
-    }
-
-    create_scene(name, scene) {
-        this.scenes[name] = scene;
-    }
-
-    select_scene(name) {
-        this.scene = name;
     }
 }

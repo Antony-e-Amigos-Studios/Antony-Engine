@@ -1,3 +1,11 @@
+class Sprite {
+    constructor(imgsrc, onload) {
+        let img = new Image();
+        img.onload = () => {onload(img)};
+        img.src = imgsrc;
+    }
+}
+
 class Animator extends Component {
     constructor() {
         super();
@@ -9,7 +17,6 @@ class Animator extends Component {
         this.playing = false;
         this.vel = 1;
         this.inc = this.vel / 100;
-        this.onimgload = () => {return 0};
     }
 
     set_current_animation(name) {
@@ -23,21 +30,7 @@ class Animator extends Component {
         this.animations[name] = [];
     }
 
-    add_frame(imgsrc, animation) {
-        if (!(animation in this.animations)) {
-            this.add_animation(animation);
-            console.warn('no such animation: "${animation}", creating new...');
-        }
-        let img = new Image();
-        img.onload = () => {
-            this.animations[animation].push(img);
-            this.onimgload();
-            console.log("Loaded");
-        };
-        img.src = imgsrc;
-    }
-
-    add_loaded_frame(img, animation) {
+    add_frame(img, animation) {
         if (!(animation in this.animations)) {
             this.add_animation(animation);
             console.warn('no such animation: "${animation}", creating new...');

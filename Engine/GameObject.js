@@ -22,8 +22,8 @@ class GameObject {
         }
     }
 
-    component(cname) {
-        
+    get(component) {
+        return this.components[component];
     }
 
     clone() {
