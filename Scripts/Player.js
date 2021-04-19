@@ -40,7 +40,7 @@ class Player extends GameObject {
         this.y += this.yspd;
         this.frame_counter += 0.01;
         if (Math.floor(this.frame_counter) == 1) {
-            this.animator.next_frame();
+            this.components["animator"].next_frame();
             this.frame_counter = 0;
         }
     }
