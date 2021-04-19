@@ -1,0 +1,83 @@
+class Animator extends Component {
+    constructor() {
+        super();
+        this.frame = 0;
+        this.current = "";
+        this.anim_state = 0;
+        this.animations = {};
+        this.counter = 0;
+        this.playing = false;
+        this.vel = 1;
+    }
+
+    set_current_animation(name) {
+        if (!(name in this.animations)) {
+            throw new Error('no such animation: "${name}"');
+        }
+        this.current = name;
+    }
+
+    add_animation(name) {
+        this.animations[name] = [];
+    }
+
+    add_frame(imgsrc, animation) {
+        if (!(animation in this.animations)) {
+            this.add_animation(animation);
+            console.warn('no such animation: "${animation}", creating new...');
+        }
+        let img = new Image();
+        img.onload = () => {
+            this.animations[animation].push(img);
+            console.log("Loaded");
+        };
+        img.src = imgsrc;
+    }
+
+    next_frame() {
+        if (this.frame < this.animations[this.current].length - 1) {
+            this.frame++;
+        } else {
+            this.frame = 0;
+        }
+    }
+
+    prev_frame() {
+        if (this.frame > 0) {
+            this.frame--;
+        }
+    }
+
+    get_frame() {
+        return this.animations[this.current][this.frame];
+    }
+
+    update_frame() {
+        this.counter += this.vel / 100;
+        if (Math.floor(this.counter) == 1) {
+            this.next_frame();
+            this.counter = 0;
+        }
+    }
+
+    update(ctx, parent) {
+        if (this.get_frame() !== undefined && parent !== undefined) {
+            ctx.drawImage(this.get_frame(), parent.x, parent.y);
+        }
+        if (this.playing) {
+            this.update_frame();
+        }
+    }
+
+    play() {
+        this.playing = true;
+    }
+
+    stop() {
+        this.playing = false;
+    }
+
+    set_velocity(val) {
+        this.vel = val;
+    }
+}
