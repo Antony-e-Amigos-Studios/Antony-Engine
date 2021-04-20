@@ -20,18 +20,23 @@ class TileManager {
 }
 
 class Map {
-    constructor(map, tileManager, dim) {
+    constructor(map, tileManager, dim, tilesize=undefined) {
         this.map = map;
         this.w = map[0].length;
         this.h = map.length;
         this.tileManager = tileManager;
-        this.tile_w = dim.width / this.w;
-        this.tile_h = dim.height / this.h;
+        if (!tilesize) {
+            this.tile_w = dim.width / this.w;
+            this.tile_h = dim.height / this.h;
+        } else {
+            this.tile_w = tilesize.w;
+            this.tile_h = tilesize.h;
+        }
     }
 
     generateMap() {
-        for (var i = 0; i < this.h; i++) {
-            for (var j = 0; j < this.w; j++) {
+        for (let i = 0; i < this.h; i++) {
+            for (let j = 0; j < this.w; j++) {
                 let current_tile = this.tileManager.get(this.map[i][j]);
                 if (current_tile) {
                     this.map[i][j] = new Tile(current_tile.texture);
@@ -40,14 +45,13 @@ class Map {
                 } else {
                     this.map[i][j] = null;
                 }
-                console.log(this.map[i][j]);
             }
         }
     }
 
     draw(ctx) {
-        for (var i = 0; i < this.h; i++) {
-            for (var j = 0; j < this.w; j++) { // olha que tesão esses { se alinhando
+        for (let i = 0; i < this.h; i++) {
+            for(let j = 0; j < this.w; j++) { // olha que tesão esses { se alinhando
                 if (this.map[i][j] !== null) {
                     this.map[i][j].draw(ctx);
                 }
