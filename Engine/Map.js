@@ -20,17 +20,18 @@ class TileManager {
 }
 
 class Map {
-    constructor(map, tileManager, dim, tilesize=undefined) {
+    constructor(map, tileManager, game, tilesize=undefined) {
         this.map = map;
         this.w = map[0].length;
         this.h = map.length;
         this.tileManager = tileManager;
+        this.tilesize = tilesize;
         if (!tilesize) {
-            this.tile_w = dim.width / this.w;
-            this.tile_h = dim.height / this.h;
+            this.tile_w = game.width / this.w;
+            this.tile_h = game.height / this.h;
         } else {
-            this.tile_w = tilesize.w;
-            this.tile_h = tilesize.h;
+            this.tile_w = this.tilesize;
+            this.tile_h = this.tilesize;
         }
     }
 

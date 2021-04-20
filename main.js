@@ -20,6 +20,25 @@ player.get("animator").play();
 
 var tileManager = new TileManager();
 
+/*
+
+var grama = new Sprite("grame.png", (img) => {
+    bla bla bla
+})
+
+é redundante pois
+
+var grama = new Image();
+
+img.addEventListener('load', function() {
+    bla bla bla
+}, false);
+img.src = 'grama.png';
+
+me fala se não é pratimamente a mesma coisa só que simplificado
+
+*/
+
 var sprt_tile1 = new Sprite("tile1.png", (img) => {
     tileManager.set(1, new Tile(img, "grama"));
 
@@ -35,7 +54,7 @@ var sprt_tile1 = new Sprite("tile1.png", (img) => {
         [1, 1, 1, 1, 1, 1, 1, 1]
     ]
     
-    let mapa = new Map(mapMatrix, tileManager, game);
+    let mapa = new Map(mapMatrix, tileManager, game, 32);
     
     mapa.generateMap();
     
