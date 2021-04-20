@@ -25,34 +25,29 @@ class Map {
         this.w = map[0].length;
         this.h = map.length;
         this.tileManager = tileManager;
-        this.tile_w = dim.w / this.w;
-        this.tile_h = dim.h / this.h;
+        this.tile_w = dim.width / this.w;
+        this.tile_h = dim.height / this.h;
     }
 
     generateMap() {
-        for (let i = 0; i < this.w; i++) {
-            for (let j = 0; j < this.h; j++) {
-                for (let key of this.tileManager.options()) {
-                    if (this.map[i][j] == key) {
-                        this.map[i][j] = new Tile(this.tileManager.get(key).texture);
-                        this.map[i][j].x = i * tile_w;
-                        this.map[i][j].y = j * tile_h;
-                    }
-                }
-                if (!(this.map[i][j] instanceof Tile)) {
+        for (var i = 0; i < this.h; i++) {
+            for (var j = 0; j < this.w; j++) {
+                let current_tile = this.tileManager.get(this.map[i][j]);
+                if (current_tile) {
+                    this.map[i][j] = new Tile(current_tile.texture);
+                    this.map[i][j].x = j * this.tile_w;
+                    this.map[i][j].y = i * this.tile_h;
+                } else {
                     this.map[i][j] = null;
                 }
+                console.log(this.map[i][j]);
             }
         }
     }
 
     draw(ctx) {
-        // aqui vc usa o valor do "key" pra pegar o new Tile que 
-        // ele tem e desenhar na tela a partir de alguma função que 
-        // a classe Tile tenha pra desenhar na tela e dpois fazer a parada multiplicado pela 
-        // constante de sla oq grande dia 👍
-        for (let i = 0; i < this.w; i++) {
-            for (let j = 0; j < this.h; j++) { // olha que tesão esses { se alinhando
+        for (var i = 0; i < this.h; i++) {
+            for (var j = 0; j < this.w; j++) { // olha que tesão esses { se alinhando
                 if (this.map[i][j] !== null) {
                     this.map[i][j].draw(ctx);
                 }

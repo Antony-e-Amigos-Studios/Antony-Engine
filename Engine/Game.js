@@ -38,6 +38,9 @@ class Game {
         for (let ent of this.entities) {
             ent.update();
             ent.update_components(this.ctx);
+            if (this.scene !== "") {
+                this.get_current_scene().draw(this.ctx);
+            }
         }
 
         window.requestAnimationFrame(this.gameLoop);
@@ -49,6 +52,12 @@ class Game {
 
     create_scene(name, scene) {
         this.scenes[name] = scene;
+    }
+
+    get_current_scene(){
+        if (this.scene !== "") {
+            return this.scenes[this.scene];
+        }
     }
 
     set_current_scene(name) {

@@ -21,7 +21,7 @@ class Animator extends Component {
 
     set_current_animation(name) {
         if (!(name in this.animations)) {
-            throw new Error('no such animation: "${name}"');
+            throw new Error(`no such animation: "${name}"`);
         }
         this.current = name;
     }
@@ -33,8 +33,9 @@ class Animator extends Component {
     add_frame(img, animation) {
         if (!(animation in this.animations)) {
             this.add_animation(animation);
-            console.warn('no such animation: "${animation}", creating new...');
+            console.warn(`no such animation: "${animation}", creating new...`);
         }
+        console.log(img);
         this.animations[animation].push(img);
     }
 
