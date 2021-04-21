@@ -44,23 +44,20 @@ var sprt_tile1 = new Sprite("tile1.png", (img) => {
 
     let mapMatrix = [
         [1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 0, 0, 1, 0, 0, 1],
-        [1, 0, 0, 0, 1, 0, 0, 1],
-        [1, 0, 0, 0, 1, 0, 0, 1],
-        [1, 0, 0, 0, 1, 0, 0, 1],
+        [1, 0, 0, 0, 1, 1, 1, 1],
+        [1, 0, 0, 0, 1, 1, 1, 1],
+        [1, 0, 1, 0, 1, 1, 1, 1],
+        [1, 0, 1, 0, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1, 1]
-    ]
-    
-    let mapa = new Map(mapMatrix, tileManager, game, 32);
-    
-    mapa.generateMap();
-    
+    ];
+
+    let mapa = new Map(mapMatrix, tileManager, game);
+ 
+    mapa.generateMap(); // oooooo
+
     game.create_scene("scene1", new Scene(mapa));
     game.set_current_scene("scene1");
-    
+
     game.add_entity(player);
     game.main()
 });

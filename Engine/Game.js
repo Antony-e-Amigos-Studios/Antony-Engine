@@ -15,12 +15,12 @@ class Game {
         this.ctx = this.canvas.getContext("2d");
         this.width = window.innerWidth;
         this.height = window.innerHeight;
-
+        
         if (this.width >= 500) {
             this.width = 600;
             this.height = 600;
         }
-
+        // me segue
         this.canvas.width = this.width;
         this.canvas.height = this.height;
     }
