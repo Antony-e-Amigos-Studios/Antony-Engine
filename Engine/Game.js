@@ -4,8 +4,9 @@
  * @copyright Copyright (c) 2021 Antony e Amigos Studios. All rights reserved
  */
 
-class Game {
+class Game extends NonEntityGameObject {
     constructor() {
+        super();
         this.xspd = 0;
         this.yspd = 0;
         this.entities = [];
@@ -34,12 +35,14 @@ class Game {
         if (this === undefined) {
             return undefined;
         }
+        this.update_components();
         this.draw(this.ctx); // apaguei essa linha sem qrer fds
         for (let ent of this.entities) {
             ent.update();
+            ent.position_update();
             ent.update_components(this.ctx);
             if (this.scene !== "") {
-                this.get_current_scene().draw(this.ctx);
+                this.get_current_scene().update(this.ctx);
             }
         }
 
@@ -64,6 +67,11 @@ class Game {
         if (name in this.scenes) { // if key exists
             this.scene = name;
         }
+    }
+
+    center(entity) {
+        return {x:(this.width/2 - entity.w/2) + entity.x,
+                y:(this.height/2 - entity.h/2) + entity.y};
     }
 
     main() {

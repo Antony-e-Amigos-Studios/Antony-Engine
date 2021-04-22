@@ -26,7 +26,9 @@ class Map {
         this.h = map.length;
         this.tileManager = tileManager;
         this.tilesize = tilesize;
+        this.has_camera = false;
     }
+
     generateMap() {
         for (let i = 0; i < this.h; i++) {
             for (let j = 0; j < this.w; j++) {
@@ -43,67 +45,61 @@ class Map {
         }
     }
 
-    draw(ctx) {
+    update(ctx) {
         for (let i = 0; i < this.h; i++) {
-            for (let j = 0; j < this.w; j++) { // olha que tesão esses { se alinhando
+            for (let j = 0; j < this.w; j++) {
                 if (this.map[i][j] !== null) {
-                    this.map[i][j].draw(ctx);
+                    if (!this.has_camera) {
+                        this.map[i][j].position_update();
+                    }
+                    this.map[i][j].update_components(ctx);
+                }
+            }
+        }
+    }
+
+    enable_camera() {
+        this.has_camera = true;
+    }
+
+    apply_to_all(f) {
+        for (let i = 0; i < this.h; i++) {
+            for (let j = 0; j < this.w; j++) {
+                if (this.map[i][j] !== null) {
+                    f(this.map[i][j]);
                 }
             }
         }
     }
 }
 
-// tive uma ideia vou colar ela aqui pq eu ja tava fazendo
-// olha ali o map ok ne
-// pra fazer uma camera o mapa primeiro precisa sair dos limites mas fodase dá pra fazer
-class camera {
+class EmptyComponent {
+    update(){
+        
+    }
+}
+
+class Camera extends Component {
     constructor(width, height, target) {
-        // essa é a minha ideia pera
-        this.width = 100;
-        this.height = 100;
+        super();
+        this.width = width;
+        this.height = height;
+        this.target = target;
+        target.add_component("camera", new EmptyComponent());
+        this.x = 0;
+        this.y = 0;
     }
 
-    apply(mapa) {
-        // essa função vai aplicar a camera no mapa
+    apply(entity) {
+        entity.move(this.x, this.y);
     }
 
-    update(target) {
-        //essa função atualiza a camera a partir da posição do player
+    update(ctx, game) {
+        game.ctx.font = "30px Arial";
+        game.ctx.fillStyle = "red";
+        this.x = this.target.x-(game.width/2-this.target.w/2);
+        this.y = this.target.y-(game.height/2-this.target.h/2);
+        game.ctx.fillText(`${this.x}, ${this.target.cx} <- ${game.width}`, 10, 50);
+        game.get_current_scene().map.apply_to_all(this.apply.bind(this));
     }
-} // ei magoninho, tem uma parada tipo
-// o mapa vai ter que ficar mt grande
-// tipo
-// eu acho que a gente nao devia se preocupar tanto com a 
-// camera agora nao, acho que ainda falta "polir" o bagulho do mapa 
-// ainda bem que eu to fora dessa 😎
-// isso, ainda mais se o tamanho dele n for o mesmo pro x e y, pq ai vai ter q fazer
-// um mapa muito maior
-// a minha ideia era
-
-// mano se liga a minha ideia
-// fazer uma LINGUAGEM pra tiling
-
-// vai ser tipo:
-// "map=(
-//   1 1 1 1 1 /^\S?((?:[10] )+)$/
-//   1 0 0 0 1
-//   1 1 1 1 1
-// )"
-// da commit gososa vo dormi daqui a poko tambe
-// sim mano tem umas parada q quero lembrar
-/*
-mano
-eu vou ter que dormir agora,
-faz o que voce tiver que fazer
-commit em comentario? blz entao
-ok
-*/
-
-// pra isso funcionar a lang tem que detectar o \n
-// grande dia
-// tsuki leitor de crafting interpreters 👍
-// nem lembro mais o que o ? faz lol
-// script.ATS
-// Antony Tiling Script
-// ele meio que ah sla fala ai
+}

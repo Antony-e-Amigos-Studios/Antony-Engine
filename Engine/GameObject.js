@@ -1,10 +1,5 @@
-class GameObject {
-    constructor(x, y, w, h, name) {
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
-        this.name = name;
+class NonEntityGameObject {
+    constructor() {
         this.components = {};
     }
 
@@ -26,8 +21,37 @@ class GameObject {
         return this.components[component];
     }
 
+    has_component(name) {
+        return name in this.components;
+    }
+}
+
+class GameObject extends NonEntityGameObject {
+    constructor(x, y, w, h, name) {
+        super();
+        this.x = x;
+        this.y = y;
+        this.initial_x = x;
+        this.initial_y = y;
+        this.cx = x;
+        this.cy = y;
+        this.w = w;
+        this.h = h;
+        this.name = name;
+    }
+
     clone() {
         return this;
+    }
+
+    position_update() {
+        this.cx = this.x;
+        this.cy = this.y;
+    }
+
+    reset_position(x, y) {
+        this.initial_x = x;
+        this.initial_y = y;
     }
 
     // Getters and setters
@@ -48,5 +72,10 @@ class GameObject {
 
     getScale() {
         return [this.w, this.h];
+    }
+
+    move(x, y) {
+        this.cx = this.x - x;
+        this.cy = this.y - y;
     }
 }

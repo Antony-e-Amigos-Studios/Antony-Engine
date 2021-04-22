@@ -73,7 +73,11 @@ class Animator extends Component {
     
     update(ctx, parent) {
         if (this.get_frame() !== undefined && parent !== undefined) {
-            ctx.drawImage(this.get_frame(), parent.x, parent.y, parent.w, parent.h);
+            if (parent.has_component("camera")) {
+                parent.cx = parent.initial_x;
+                parent.cy = parent.initial_y;
+            }
+            ctx.drawImage(this.get_frame(), parent.cx, parent.cy, parent.w, parent.h);
         }
         if (this.playing) {
             this.update_frame();

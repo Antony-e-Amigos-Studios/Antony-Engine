@@ -3,7 +3,7 @@ class Scene {
         this.map = generatedMap;
     }
 
-    draw(ctx) {
-        this.map.draw(ctx);
+    update(ctx) {
+        this.map.update(ctx);
     }
 }
