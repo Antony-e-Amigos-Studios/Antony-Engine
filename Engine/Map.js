@@ -48,7 +48,7 @@ class Map {
     update(ctx) {
         for (let i = 0; i < this.h; i++) {
             for (let j = 0; j < this.w; j++) {
-                if (this.map[i][j] !== null) {
+                if (this.map[i][j] !== null && this.map[i][j] instanceof Tile) {
                     if (!this.has_camera) {
                         this.map[i][j].position_update();
                     }
@@ -65,7 +65,7 @@ class Map {
     apply_to_all(f) {
         for (let i = 0; i < this.h; i++) {
             for (let j = 0; j < this.w; j++) {
-                if (this.map[i][j] !== null) {
+                if (this.map[i][j] !== null && this.map[i][j] instanceof Tile) {
                     f(this.map[i][j]);
                 }
             }
@@ -82,8 +82,6 @@ class EmptyComponent {
 class Camera extends Component {
     constructor(width, height, target) {
         super();
-        this.width = width;
-        this.height = height;
         this.target = target;
         target.add_component("camera", new EmptyComponent());
         this.x = 0;
@@ -96,10 +94,10 @@ class Camera extends Component {
 
     update(ctx, game) {
         game.ctx.font = "30px Arial";
-        game.ctx.fillStyle = "red";
+        game.ctx.fillStyle = "rgb(255,255,255)";
         this.x = this.target.x-(game.width/2-this.target.w/2);
         this.y = this.target.y-(game.height/2-this.target.h/2);
-        game.ctx.fillText(`${this.x}, ${this.target.cx} <- ${game.width}`, 10, 50);
+        game.ctx.fillText(`camera: ${this.x}, ${this.y}`, 10, 50);
         game.get_current_scene().map.apply_to_all(this.apply.bind(this));
     }
 }
