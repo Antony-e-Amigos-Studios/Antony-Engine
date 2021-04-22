@@ -51,7 +51,7 @@ var sprt_tile1 = new Sprite("tile1.png", (img) => {
         [1, 1, 1, 1, 1, 1, 1, 1]
     ];
 
-    let mapa = new Map(mapMatrix, tileManager, game);
+    let mapa = new Map(mapMatrix, tileManager);
  
     mapa.generateMap(); // oooooo
 
