@@ -4,21 +4,32 @@ var center = game.center(player);
 player.reset_position(center.x, center.y);
 
 player.name = "player";
-player.add_component("animator", new Animator());
+// player.add_component("animator", new Animator());
+player.add_component("spriteanimator", new SpriteSheetAnimator()); // TODO
 
-player.get("animator").add_animation("idle");
-player.get("animator").set_current_animation("idle");
+// player.get("spriteanimator").add_animation("idle");
+player.get("spriteanimator").attach_animation(0, "idle");
+player.get("spriteanimator").attach_animation(1, "back");
+player.get("spriteanimator").attach_animation(2, "left");
+player.get("spriteanimator").attach_animation(3, "right");
+player.get("spriteanimator").set_current_animation("idle");
 
 const load_callback = (img) => {
-    player.get("animator").add_frame(img, "idle");
-    player.get("animator").adjust_size(player);
+    player.get("spriteanimator").add_spritesheet(img);
+    player.get("spriteanimator").set_scale(3);
+    // player.get("spriteanimator").add_frame(img, "idle");
 };
 
-var sprt_top = new Sprite("top.png", load_callback);
-var sprt_top2 = new Sprite("top2.png", load_callback);
+var sprt_top = new Sprite("sprite.png", load_callback);
 
-player.get("animator").set_velocity(10);
-player.get("animator").play();
+// calma ainda to fazendo isso aqui
+var background = new Sprite("grama.jpg", (img) => {
+    game.ctx.drawImage(img, 0, 0, window.innerWidth, window.innerHeight);
+});
+// var sprt_top2 = new Sprite("top2.png", load_callback);
+
+player.get("spriteanimator").set_velocity(10);
+player.get("spriteanimator").play();
 
 var tileManager = new TileManager();
 
