@@ -1,8 +1,9 @@
 class Player extends GameObject {
     constructor(x, y, w, h) {
         super(x, y, w, h);
-        this.xspd = 0;
-        this.yspd = 0;
+        this.xspd = 0; // ou magoninho rapidao, onde q tu ta colocando a img da grama no
+                       // game? ok
+        this.yspd = 0; // sigame
 
         document.addEventListener('keydown', (e) => {
             if (e.key == "ArrowLeft") {

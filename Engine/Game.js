@@ -10,6 +10,7 @@ class Game extends NonEntityGameObject {
         this.xspd = 0;
         this.yspd = 0;
         this.entities = [];
+        this.background = undefined;
         this.scenes = {};
         this.scene = "";
         this.canvas = document.createElement("canvas");
@@ -27,8 +28,16 @@ class Game extends NonEntityGameObject {
     }
 
     draw(ctx) {
-        ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-        ctx.fillRect(0, 0, this.width, this.height);
+        if(!this.background) {
+            ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+            ctx.fillRect(0, 0, this.width, this.height);
+        } else {
+            ctx.drawImage(this.background, 0, 0, this.width, this.height);
+        }
+    }
+
+    setbg(img) {
+        this.background = img;
     }
 
     gameLoop() {
