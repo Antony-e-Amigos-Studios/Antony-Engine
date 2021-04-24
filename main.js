@@ -26,9 +26,9 @@ const load_callback = (img) => {
 var sprt_top = new Sprite("sprite.png", load_callback);
 
 // calma ainda to fazendo isso aqui // pq a img n ta carregando carai SLA KKKKKKK wtf funfou do nada
-// var background = new Sprite("grass.png", (img) => { // É PQ N TA LÁ
-    // game.setbg(img);
-// });
+var background = new Sprite("grass.png", (img) => { // É PQ N TA LÁ
+    game.setbg(img);
+});
 // sim é doentio // consigo oq? MAGO SE LIGFA VO MANDAR A PROVA
 // var sprt_top2 = new Sprite("top2.png", load_callback); sexo
 
