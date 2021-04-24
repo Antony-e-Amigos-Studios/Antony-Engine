@@ -32,9 +32,13 @@ class Game extends NonEntityGameObject {
             ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
             ctx.fillRect(0, 0, this.width, this.height);
         } else {
-            ctx.drawImage(this.background, 0, 0, this.width, this.height);
-        }
-    }
+            ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
+            ctx.drawImage(this.background, 0, 0, this.width, this.height); 
+        } // talvez background seja sempre undefined
+        // magoninho acho q tem q setar primeiro o bg tu fez isso?
+        // eu sou um deus magoninho agradece dps
+        // eu troquei de grass.png pra grama.jpg e funcionou k
+    } // vai aí q eu to fazendo tarefa
 
     setbg(img) {
         this.background = img;

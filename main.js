@@ -25,12 +25,12 @@ const load_callback = (img) => {
 
 var sprt_top = new Sprite("sprite.png", load_callback);
 
-// calma ainda to fazendo isso aqui
-var background = new Sprite("grama.jpg", (img) => {
+// calma ainda to fazendo isso aqui // pq a img n ta carregando carai SLA KKKKKKK wtf funfou do nada
+var background = new Sprite("grass.png", (img) => { // É PQ N TA LÁ
     game.setbg(img);
 });
-// sim é doentio
-// var sprt_top2 = new Sprite("top2.png", load_callback);
+// sim é doentio // consigo oq? MAGO SE LIGFA VO MANDAR A PROVA
+// var sprt_top2 = new Sprite("top2.png", load_callback); sexo
 
 player.get("spriteanimator").set_velocity(10);
 player.get("spriteanimator").play();
@@ -38,33 +38,22 @@ player.get("spriteanimator").play();
 var tileManager = new TileManager();
 
 let mapMatrix = [
-    [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1]
 ];
 
 let mapa = new Map(mapMatrix, tileManager, player.w);
 let camera = new Camera(300, 300, player);
 
-var sprt_tile1 = new Sprite("tile1.png", (img) => {
+var sprt_tile1 = new Sprite("crate.png", (img) => {
     tileManager.set(1, new Tile(img, "grama"));
     mapa.generateMap();
 });
-// olha o browser como ta gostoso
-// mexe o personagem pro lado pq ele ta dentro do bloco 
-// sim isso é manjado ja
-// é bug no listener
-// achei q 6 tava falando do bug dele ficar parado do nada
-// e n andar pra lugar nenhum
-// segura prum lado e pro outro
-/// KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK VSFD
-// eu fiz o negocio malfeito so pra fins de debugging
-    // CARALHO ESQUECI DA TAREFA DE FILOSOFIA FUDEU pera xo da commit
-    // ta lento saporra
-    // calaboca meu pc tem 8gb ram V A G A B U N  D A 
+
 mapa.enable_camera();
 game.add_component("camera", camera);
 
