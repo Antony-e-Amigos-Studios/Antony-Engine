@@ -99,11 +99,11 @@ class Animator extends Component {
 }
 
 class SpriteSheetAnimator extends Animator {
-    constructor() {
+    constructor(rows, cols) {
         super();
         this.spritesheet = null;
-        this.cols = 3;
-        this.rows = 4;
+        this.cols = cols;
+        this.rows = rows;
         this.srcX = 0;
         this.srcY = 0;
         this.frame = 1;
@@ -124,13 +124,14 @@ class SpriteSheetAnimator extends Animator {
         this.sprite_height = this.spritesheet.height / this.rows;
     }
 
+    get_frame() {
+    }
+
     set_scale(scale) {
         this.scale = scale;
     }
 
     update_frame() {
-        // this.current_frame = ++this.current_frame % this.cols;
-        
         if (this.spritesheet){
             this.srcX = this.frame * this.sprite_width;
             this.srcY = this.animations[this.current] * this.sprite_height;
@@ -141,9 +142,6 @@ class SpriteSheetAnimator extends Animator {
             this.next_frame();
             this.counter = 0;
         }
-        
-        // console.log(this.srcX, this.srcY);
-
     }
 
     next_frame() {
@@ -167,9 +165,4 @@ class SpriteSheetAnimator extends Animator {
             this.update_frame();
         }
     }
-
-    play() {
-        this.playing = true;
-    }
-
 }

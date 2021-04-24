@@ -51,7 +51,7 @@ class Game extends NonEntityGameObject {
         this.update_components();
         this.draw(this.ctx); // apaguei essa linha sem qrer fds
         for (let ent of this.entities) {
-            ent.update();
+            ent.update(this);
             ent.position_update();
             ent.update_components(this.ctx);
             if (this.scene !== "") {

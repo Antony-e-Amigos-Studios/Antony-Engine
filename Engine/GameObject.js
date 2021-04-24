@@ -54,6 +54,10 @@ class GameObject extends NonEntityGameObject {
         this.initial_y = y;
     }
 
+    update() {
+        
+    }
+
     // Getters and setters
     
     setPosition(x, y) {

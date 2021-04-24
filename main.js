@@ -10,7 +10,7 @@ player.name = "player";
 // totalmente fudida e com nomes incrivelmente bons
 //
 // player.add_component("animator", new Animator());
-player.add_component("spriteanimator", new SpriteSheetAnimator()); // TODO
+player.add_component("spriteanimator", new SpriteSheetAnimator(4,3));
 
 // player.get("spriteanimator").add_animation("idle");
 player.get("spriteanimator").assoc_animations(["idle","back","left","right"],  [0,1,2,3]);
@@ -26,9 +26,9 @@ const load_callback = (img) => {
 var sprt_top = new Sprite("sprite.png", load_callback);
 
 // calma ainda to fazendo isso aqui // pq a img n ta carregando carai SLA KKKKKKK wtf funfou do nada
-var background = new Sprite("grass.png", (img) => { // É PQ N TA LÁ
-    game.setbg(img);
-});
+// var background = new Sprite("grass.png", (img) => { // É PQ N TA LÁ
+    // game.setbg(img);
+// });
 // sim é doentio // consigo oq? MAGO SE LIGFA VO MANDAR A PROVA
 // var sprt_top2 = new Sprite("top2.png", load_callback); sexo
 
@@ -36,6 +36,8 @@ player.get("spriteanimator").set_velocity(10);
 player.get("spriteanimator").play();
 
 var tileManager = new TileManager();
+
+player.add_component("movement",new BasicMovement(player, 10));
 
 let mapMatrix = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
