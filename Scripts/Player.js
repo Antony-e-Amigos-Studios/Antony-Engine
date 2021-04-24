@@ -1,4 +1,6 @@
-class Player extends GameObject {
+import { GameObject } from "../Engine/GameObject.js"
+
+export default class Player extends GameObject {
     constructor(x, y, w, h) {
         super(x, y, w, h);
     }

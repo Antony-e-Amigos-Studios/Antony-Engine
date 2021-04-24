@@ -1,9 +1,38 @@
+import Component from "./Component.js"
+
 class Sprite {
     constructor(imgsrc, onload) {
         let img = new Image();
         img.onload = () => {onload(img)};
         img.src = imgsrc;
     }
+}
+
+function loadSprites(onload, ...srcs) {
+    let loaded = 0; 
+    let toload = srcs.length; //isso
+    let imglist = {}; // só que vai em forma de objeto
+                      // tipo, se voce chamar // boa ideia
+                    // loadSprites(["s1", "s2"]) prs
+                    // ele vai passar pra func {"s1": imagem la, "s2": imagem la}
+                    // ata entendi
+    srcs.forEach((src) => {
+        loadSprite(src, (img) => { //carrega as img aq? //esse ..img retorna um array com todos os valores q vc coloco na função
+            loaded++; // sim, ele chama essa outra func 
+            imglist[src] = img;  //tipo se na fc ta sla("oi", "sla", "caraca", "foda", "q e isso") o array vai ser ["oi", "sla", "caraca", "fida", "q e isso"]
+            console.log('loaded: ' + loaded); // ou perae mas é que tipo, essa função é a função que vai ser chamada aqui
+            if (loaded == toload) {
+                onload(imglist);
+            }
+        });
+    });
+}
+
+function loadSprite(src, onload) { //então aonde q vc passa todas as img?
+    let img = new Image();
+    img.onload = () => {onload(img)}; // <- e aqui ele só passa img pra ela
+    img.src = src;
+    
 }
 
 class Animator extends Component {
@@ -166,3 +195,5 @@ class SpriteSheetAnimator extends Animator {
         }
     }
 }
+
+export {Animator, SpriteSheetAnimator, Sprite, loadSprite, loadSprites};

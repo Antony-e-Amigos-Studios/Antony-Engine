@@ -1,4 +1,4 @@
-class Scene {
+export default class Scene {
     constructor(generatedMap) {
         this.map = generatedMap;
     }

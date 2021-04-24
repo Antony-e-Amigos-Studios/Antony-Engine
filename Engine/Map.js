@@ -1,6 +1,11 @@
+import Component from './Component.js'
+import Tile from "./Tile.js"
+
 /**
  * gustavo é furry
  */
+
+
 class TileManager {
     constructor(initial = {}) {
         this.mapper = initial;
@@ -88,16 +93,20 @@ class Camera extends Component {
         this.y = 0;
     }
 
-    apply(entity) {
+    apply(entity) { //
         entity.move(this.x, this.y);
     }
 
     update(ctx, game) {
         this.x = this.target.x-(game.width/2-this.target.w/2);
         this.y = this.target.y-(game.height/2-this.target.h/2);
-        game.ctx.font = "30px Arial";
-        game.ctx.fillStyle = "rgb(255,255,255)";
-        game.ctx.fillText(`camera: ${this.x}, ${this.y}`, 10, 50);
+        
+        // game.ctx.font = "30px Arial";
+        // game.ctx.fillStyle = "rgb(255,255,255)";
+        // game.ctx.fillText(`camera: ${this.x}, ${this.y}`, 10, 50);
+        
         game.get_current_scene().map.apply_to_all(this.apply.bind(this));
     }
 }
+
+export {Camera, Map, TileManager};

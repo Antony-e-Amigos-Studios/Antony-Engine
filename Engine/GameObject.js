@@ -83,3 +83,5 @@ class GameObject extends NonEntityGameObject {
         this.cy = this.y - y;
     }
 }
+
+export {NonEntityGameObject, GameObject};

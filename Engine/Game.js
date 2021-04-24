@@ -3,8 +3,9 @@
  * @author Magoninho and Tsukiiii
  * @copyright Copyright (c) 2021 Antony e Amigos Studios. All rights reserved
  */
+import { NonEntityGameObject } from "./GameObject.js";
 
-class Game extends NonEntityGameObject {
+export default class Game extends NonEntityGameObject {
     constructor() {
         super();
         this.xspd = 0;
