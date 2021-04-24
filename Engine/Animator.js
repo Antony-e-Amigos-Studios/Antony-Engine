@@ -103,13 +103,7 @@ class Animator extends Component {
         if (this.get_frame() !== undefined && parent !== undefined) {
             if (parent.has_component("camera")) {
                 parent.cx = parent.initial_x;
-                parent.cy = parent.initial_y;/*
-                
-                On branch master
-                Your branch is up to date with 'origin/master'.
-
-                nothing to commit, working tree clean                
-                */
+                parent.cy = parent.initial_y;
             }
             ctx.drawImage(this.get_frame(), parent.cx, parent.cy, parent.w, parent.h);
                 
