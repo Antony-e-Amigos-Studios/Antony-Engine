@@ -45,10 +45,7 @@ export default class BasicMovement extends Component {
         document.addEventListener('keydown', (e) => {
             switch (e.key) {   
                 case this.left():
-                    this.xspd = -this.speed; // se a tecla for pressionada o keystate
-                                                // dessa tecla vai ser a velocidade do player
-                                                // na direção dessa tecla
-                                                // no caso do left, -10 ou -8 sla
+                    this.xspd = -this.speed; 
                     this.keystates[this.left()] = this.xspd;
                 break;
                 case this.right():
