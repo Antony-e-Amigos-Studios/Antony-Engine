@@ -29,6 +29,8 @@ export default class BasicMovement extends Component {
         if (this.xspd && this.yspd) {
             this.xspd2 = this.xspd / Math.sqrt(2);
             this.yspd2 = this.yspd / Math.sqrt(2); // escreve git add .
+                                                   // git commit -m "qq coisa q tu quiser"
+                                                   // git push
         }
         
         this.parent.x += this.xspd2;
