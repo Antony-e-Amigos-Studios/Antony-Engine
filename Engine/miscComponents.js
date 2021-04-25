@@ -1,11 +1,15 @@
 import Component from './Component.js'
 
+const RAIZ_DE_DOIS = Math.sqrt(2);
+
 export default class BasicMovement extends Component {
-    constructor(parent, velocity, keys=["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]) {
+    constructor(parent, velocity, keys) {
         super();
+        keys = keys == null || undefined ? ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"] : keys
         this.parent = parent;
         this.keystates = {};
-        this.keys = keys;
+        this.keys = keys
+        this.isMovev = false;
 
         if (keys.length != 4) {
             throw new Error("must specify exactly 4 keys");
@@ -22,33 +26,25 @@ export default class BasicMovement extends Component {
     }
 
     update() {
-
         this.xspd2 = this.xspd;
         this.yspd2 = this.yspd;
 
         if (this.xspd && this.yspd) {
-            this.xspd2 = this.xspd / Math.sqrt(2);
-            this.yspd2 = this.yspd / Math.sqrt(2); // escreve git add .
-                                                   // git commit -m "qq coisa q tu quiser"
-                                                   // git push
+            this.xspd2 = this.xspd / RAIZ_DE_DOIS; // KKK
+            this.yspd2 = this.yspd / RAIZ_DE_DOIS;
         }
         
         this.parent.x += this.xspd2;
         this.parent.y += this.yspd2;
+        
     }
 
     addListeners() {
-        // this.keys[0] -> left
-        // this.keys[1] -> right
-        // this.keys[2] -> up
-        // this.down() -> down
         document.addEventListener('keydown', (e) => {
+            this.isMovev = true
             switch (e.key) {   
                 case this.left():
-                    this.xspd = -this.speed; // se a tecla for pressionada o keystate
-                                                // dessa tecla vai ser a velocidade do player
-                                                // na direção dessa tecla
-                                                // no caso do left, -10 ou -8 sla
+                    this.xspd = -this.speed;
                     this.keystates[this.left()] = this.xspd;
                 break;
                 case this.right():
@@ -65,19 +61,13 @@ export default class BasicMovement extends Component {
                 break;
             }
         });
+
         document.addEventListener('keyup', (e) => {
+            this.isMovev = false
             switch (e.key) {
                 case this.left():
-                    this.keystates[this.left()] = 0; // perceba q o keystate só vira 0 no keyup
-                                                    // mais ou menos, a tecla que ainda não foi solta
-                                                    // ta no keystate
-                    this.xspd = this.keystates[this.right()]; // o keystate do left quando a tecla é soltada
-                                                              // vira 0, que é o player parado
-                                                              // aí ele coloca a velocidade x como sendo
-                                                            // o keystate da tecla right
-                                                            // ou seja, se a tecla right ainda nao tiver sido solta
-                                                            // ele vai continuar indo pra direita pq o keystate
-                                                            // do right ainda vai ser a velocidade dele pra direita
+                    this.keystates[this.left()] = 0;
+                    this.xspd = this.keystates[this.right()];
                 break;
                 case this.right(): 
                     this.keystates[this.right()] = 0;
@@ -93,6 +83,10 @@ export default class BasicMovement extends Component {
                 break;
             }
         });
+    }
+
+    isMove(){
+        return this.isMovev
     }
 
     up() {

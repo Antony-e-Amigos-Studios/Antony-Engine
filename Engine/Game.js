@@ -18,12 +18,6 @@ export default class Game extends NonEntityGameObject {
         this.ctx = this.canvas.getContext("2d");
         this.width = window.innerWidth;
         this.height = window.innerHeight;
-        
-        if (this.width >= 500) {
-            this.width = 600;
-            this.height = 600;
-        }
-        // me segue
         this.canvas.width = this.width;
         this.canvas.height = this.height;
     }
@@ -35,11 +29,8 @@ export default class Game extends NonEntityGameObject {
         } else {
             ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
             ctx.drawImage(this.background, 0, 0, this.width, this.height); 
-        } // talvez background seja sempre undefined
-        // magoninho acho q tem q setar primeiro o bg tu fez isso?
-        // eu sou um deus magoninho agradece dps
-        // eu troquei de grass.png pra grama.jpg e funcionou k
-    } // vai aí q eu to fazendo tarefa
+        }
+    }
 
     setbg(img) {
         this.background = img;

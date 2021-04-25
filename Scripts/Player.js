@@ -1,12 +1,12 @@
 import { GameObject } from "../Engine/GameObject.js"
+import { Audio } from '../Engine/Audio.js'
 
 export default class Player extends GameObject {
     constructor(x, y, w, h) {
         super(x, y, w, h);
     }
-
+    
     update(game) {
-        // to com preguiça de rearranjar esses ifs fodase
         if (this.get("movement")) {
             let mov = this.get("movement");
             if (mov.xspd > 0) {
@@ -24,11 +24,12 @@ export default class Player extends GameObject {
             if (!mov.xspd && !mov.yspd) {
                 this.get("spriteanimator").stop();
             } else {
+                this.get("audioplayer").play();
                 this.get("spriteanimator").play();
             }
         }
         game.ctx.font = "30px Arial";
         game.ctx.fillStyle = "rgb(255,255,255)";
-        game.ctx.fillText(`player: ${this.x}, ${this.y}`, 10, 100);
+        game.ctx.fillText(`player: ${Math.floor(this.x)}, ${Math.floor(this.y)}`, 10, 100); // debug
     }
 }
