@@ -1,3 +1,5 @@
+
+
 class NonEntityGameObject {
     constructor() {
         this.components = {};

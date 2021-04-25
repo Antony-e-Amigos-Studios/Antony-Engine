@@ -51,13 +51,13 @@ export default class Game extends NonEntityGameObject {
         }
         this.update_components();
         this.draw(this.ctx); // apaguei essa linha sem qrer fds
+        if (this.scene !== "") {
+            this.get_current_scene().update(this.ctx);
+        }
         for (let ent of this.entities) {
             ent.update(this);
             ent.position_update();
             ent.update_components(this.ctx);
-            if (this.scene !== "") {
-                this.get_current_scene().update(this.ctx);
-            }
         }
 
         window.requestAnimationFrame(this.gameLoop);

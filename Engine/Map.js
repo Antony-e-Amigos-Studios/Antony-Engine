@@ -1,10 +1,8 @@
-import Component from './Component.js'
-import Tile from "./Tile.js"
-
 /**
  * gustavo é furry
  */
-
+import Component from "./Component.js"
+import Tile from "./Tile.js"
 
 class TileManager {
     constructor(initial = {}) {
@@ -88,25 +86,25 @@ class Camera extends Component {
     constructor(width, height, target) {
         super();
         this.target = target;
-        target.add_component("camera", new EmptyComponent());
         this.x = 0;
         this.y = 0;
+        this.target.add_component("camera", new EmptyComponent());
     }
 
-    apply(entity) { //
+    apply(entity) {
         entity.move(this.x, this.y);
     }
 
+    lerp(v0, v1, t) {
+        return (1 - t) * v0 + t * v1;
+    }
+
     update(ctx, game) {
-        this.x = this.target.x-(game.width/2-this.target.w/2);
-        this.y = this.target.y-(game.height/2-this.target.h/2);
-        
-        // game.ctx.font = "30px Arial";
-        // game.ctx.fillStyle = "rgb(255,255,255)";
-        // game.ctx.fillText(`camera: ${this.x}, ${this.y}`, 10, 50);
-        
+        this.x = this.lerp(this.x, this.target.x-(game.width/2-this.target.w/2), 0.1);
+        this.y = this.lerp(this.y, this.target.y-(game.height/2-this.target.h/2), 0.1);
+
         game.get_current_scene().map.apply_to_all(this.apply.bind(this));
     }
 }
 
-export {Camera, Map, TileManager};
+export { TileManager, Map, Camera, EmptyComponent };
