@@ -1,10 +1,8 @@
-import Component from './Component.js'
-import Tile from "./Tile.js"
-
 /**
  * gustavo é furry
  */
-
+import Component from "./Component.js"
+import Tile from "./Tile.js"
 
 class TileManager {
     constructor(initial = {}) {
@@ -40,7 +38,7 @@ class Map {
                 let current_tile = this.tileManager.get(this.map[i][j]);
                 if (current_tile) {
                     this.map[i][j] = new Tile(current_tile.texture);
-                    this.map[i][j].setScale(this.tilesize+1, this.tilesize+1);
+                    this.map[i][j].setScale(this.tilesize, this.tilesize);
                     this.map[i][j].x = j * this.tilesize;
                     this.map[i][j].y = i * this.tilesize;
                 } else {
@@ -85,13 +83,12 @@ class EmptyComponent {
 }
 
 class Camera extends Component {
-    constructor(width, height, target, speed) {
+    constructor(width, height, target) {
         super();
         this.target = target;
-        target.add_component("camera", new EmptyComponent());
         this.x = 0;
         this.y = 0;
-        this.speed = speed / 10 % 1;
+        this.target.add_component("camera", new EmptyComponent());
     }
 
     apply(entity) {
@@ -99,16 +96,14 @@ class Camera extends Component {
     }
 
     lerp(v0, v1, t) {
-        return v0 + t * (v1 - v0);
+        return (1 - t) * v0 + t * v1;
     }
 
     update(ctx, game) {
-        this.x = this.lerp(this.x, this.target.x-(game.width/2-this.target.w/2), this.speed);
-        this.y = this.lerp(this.y, this.target.y-(game.height/2-this.target.h/2), this.speed);
-        this.x = Math.min(this.x, 0);
-        this.y = Math.min(this.y, 0);
+        this.x = this.lerp(this.x, this.target.x-(game.width/2-this.target.w/2), 0.1);
+        this.y = this.lerp(this.y, this.target.y-(game.height/2-this.target.h/2), 0.1);
         game.get_current_scene().map.apply_to_all(this.apply.bind(this));
     }
 }
 
-export {Camera, Map, TileManager};
+export { TileManager, Map, Camera, EmptyComponent };

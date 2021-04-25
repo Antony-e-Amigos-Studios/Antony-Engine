@@ -19,14 +19,13 @@ export default class Game extends NonEntityGameObject {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         
+        if (this.width >= 500) {
+            this.width = 600;
+            this.height = 600;
+        }
+        // me segue
         this.canvas.width = this.width;
         this.canvas.height = this.height;
-        document.querySelector('body').addEventListener('resize', () => {
-            this.width = window.innerWidth;
-            this.height = window.innerHeight;
-            this.canvas.width = this.width;
-            this.canvas.height = this.height;
-        })
     }
 
     draw(ctx) {

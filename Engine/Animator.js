@@ -154,7 +154,6 @@ class SpriteSheetAnimator extends Animator {
     }
 
     get_frame() {
-        return {frame: this.frame, animation_name: this.current, playing: this.playing};
     }
 
     set_scale(scale) {
@@ -167,8 +166,7 @@ class SpriteSheetAnimator extends Animator {
             this.srcY = this.animations[this.current] * this.sprite_height;
         }
 
-        if (this.playing)
-            this.counter += this.inc;
+        this.counter += this.inc;
         if (Math.floor(this.counter) == 1) {
             this.next_frame();
             this.counter = 0;
@@ -177,10 +175,6 @@ class SpriteSheetAnimator extends Animator {
 
     next_frame() {
         this.frame = ++this.frame % this.cols;
-    }
-
-    set_frame(val) {
-        this.frame = val;
     }
 
     update(ctx, parent) {

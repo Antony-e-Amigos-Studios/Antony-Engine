@@ -1,10 +1,10 @@
 import { GameObject } from './GameObject.js'
 import { Animator } from "./Animator.js"
 
-export default class Tile extends GameObject {
-    constructor(texture, name) {
+class Tile extends GameObject {
+    constructor(texture) {
         super(0, 0, 0, 0);
-        this.name = name;
+        this.name = "generic tile";
         this.texture = texture;
         this.add_component("animator", new Animator());
         this.get("animator").add_frame(texture, "0");
@@ -12,3 +12,5 @@ export default class Tile extends GameObject {
         this.get("animator").adjust_size(this);
     }
 }
+
+export default Tile;
