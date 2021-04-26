@@ -30,6 +30,12 @@ class Map {
         this.tileManager = tileManager;
         this.tilesize = tilesize;
         this.has_camera = false;
+        this.entitys = []
+        this.game
+    }
+
+    LoadGame(game){
+        this.game = game
     }
 
     generateMap() {
@@ -48,7 +54,27 @@ class Map {
         }
     }
 
+    generateEntitys(ctx){
+        this.entitys.forEach(e => {
+            e.update(this.game)
+            e.position_update()
+            e.update_components(ctx)
+        })
+    }
+
+    add_entity(entity){
+        this.entitys.push(entity)
+    }
+
+    add_entitys(...entity){
+        entity.forEach(e => {
+            this.entitys.push(e)
+        })
+    }
+
     update(ctx) {
+        this.generateEntitys(ctx)
+
         for (let i = 0; i < this.h; i++) {
             for (let j = 0; j < this.w; j++) {
                 if (this.map[i][j] !== null && this.map[i][j] instanceof Tile) {
@@ -88,11 +114,9 @@ class Camera extends Component {
         this.target = target;
         this.x = 0;
         this.y = 0;
+        this.w = width
+        this.h = height
         this.target.add_component("camera", new EmptyComponent());
-    }
-
-    apply(entity) {
-        entity.move(this.x, this.y);
     }
 
     lerp(v0, v1, t) {
@@ -100,9 +124,20 @@ class Camera extends Component {
     }
 
     update(ctx, game) {
+
         this.x = this.lerp(this.x, this.target.x-(game.width/2-this.target.w/2), 0.1);
         this.y = this.lerp(this.y, this.target.y-(game.height/2-this.target.h/2), 0.1);
         game.get_current_scene().map.apply_to_all(this.apply.bind(this));
+    }
+
+    apply(entity) {
+        entity.move(this.x, this.y);
+    }
+
+    move(map){
+        map.apply_to_all(data => {
+            data.x -= 1
+        })
     }
 }
 

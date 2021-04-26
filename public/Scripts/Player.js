@@ -1,5 +1,6 @@
 import { GameObject } from "../Engine/GameObject.js"
-import { Audio } from '../Engine/Audio.js'
+import Fps from '../Engine/Fps.js'
+import Multplayer from '../Engine/Multplayer.js'
 
 export default class Player extends GameObject {
     constructor(x, y, w, h) {
@@ -24,12 +25,14 @@ export default class Player extends GameObject {
             if (!mov.xspd && !mov.yspd) {
                 this.get("spriteanimator").stop();
             } else {
+                Multplayer.emit('UpdatePlayer', Multplayer.getId(), {x:this.x, y:this.y, name:this.name, current:this.get("spriteanimator").current, frame:this.get("spriteanimator").frame})
                 this.get("audioplayer").play();
                 this.get("spriteanimator").play();
             }
         }
+        
         game.ctx.font = "30px Arial";
         game.ctx.fillStyle = "rgb(255,255,255)";
-        game.ctx.fillText(`player: ${Math.floor(this.x)}, ${Math.floor(this.y)}`, 10, 100); // debug
+        game.ctx.fillText(`Fps: ${Math.floor(Fps())}`, 10, 100); // debug
     }
 }

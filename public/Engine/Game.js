@@ -50,12 +50,16 @@ export default class Game extends NonEntityGameObject {
             ent.position_update();
             ent.update_components(this.ctx);
         }
-
+        
         window.requestAnimationFrame(this.gameLoop);
     }
 
     add_entity(entity) {
         this.entities.push(entity);
+    }
+
+    remove_entity(entity) {
+        delete this.entities[entity]
     }
 
     create_scene(name, scene) {

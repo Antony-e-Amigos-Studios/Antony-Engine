@@ -11,11 +11,7 @@ class Sprite {
 function loadSprites(onload, ...srcs) {
     let loaded = 0; 
     let toload = srcs.length; //isso
-    let imglist = {}; // só que vai em forma de objeto
-                      // tipo, se voce chamar // boa ideia
-                    // loadSprites(["s1", "s2"]) prs
-                    // ele vai passar pra func {"s1": imagem la, "s2": imagem la}
-                    // ata entendi
+    let imglist = {}; 
     srcs.forEach((src) => {
         loadSprite(src, (img) => { //carrega as img aq? //esse ..img retorna um array com todos os valores q vc coloco na função
             loaded++; // sim, ele chama essa outra func 
