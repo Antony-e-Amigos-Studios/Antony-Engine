@@ -28,7 +28,8 @@ export default class Game extends NonEntityGameObject {
             ctx.fillRect(0, 0, this.width, this.height);
         } else {
             ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
-            ctx.drawImage(this.background, 0, 0, this.width, this.height); 
+            ctx.drawImage(this.background, 0, 0, this.width, this.height);
+            ctx.imageSmoothingEnabled = false; // A LINHA MAIS MILAGROSA DO PROJETO
         }
     }
 

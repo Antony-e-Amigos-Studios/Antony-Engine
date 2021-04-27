@@ -10,7 +10,7 @@ class Audio {
         let source = document.createElement('source')
         
         audio.volume = volume;
-        audio.loop = options.loop || false;
+        audio.loop = options?.loop || false;
         audio.id = audioName;
         document.querySelector('body').append(audio);
         source.src = url;
@@ -32,6 +32,12 @@ class Audio {
         let audio = document.getElementById(this.audioName)
         audio.pause()
         audio.currentTime = 0
+    }
+
+    SetVolume(volume){
+        let audio = document.getElementById(this.audioName)
+        audio.volume = volume
+        this.volume = volume
     }
 }
 

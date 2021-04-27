@@ -1,9 +1,9 @@
-const decimalPlaces    = 2;
+const decimalPlaces = 2;
 const updateEachSecond = 1;
 
 // Cache values
 const decimalPlacesRatio = Math.pow(10, decimalPlaces);
-let timeMeasurements     = [];
+let timeMeasurements= [];
 
 // Final output
 let fps = 0;

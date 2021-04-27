@@ -7,38 +7,34 @@ import Scene from "./Engine/Scene.js"
 import Tile from "./Engine/Tile.js"
 import { Audio, AudioPlayer } from './Engine/Audio.js'
 import Multplayer from './Engine/Multplayer.js'
+import { Interface, Panel } from './Engine/Interface.js'
 
-// entao, basicamente pra tudo funcionar tu tem que criar um game
+/**
+    Essa e o script mãe, sem ele nada e executado
+    Esse script e chamado para a insersão de GameObjects, Components e entre outros
+    
+    Sua utilização e obrigadorio 
+*/
 
-// let audio = new Audio('ambient.mp3', 1, 'ambient', {loop: true});
-// audio.Play();
-// let players = {}
-Multplayer.create_connetion()
 
-var game = new Game();//x  y   w    h
+Multplayer.create_connetion() //Não mecher!
+
+/* Não retirar, comentei pois a repedição do som era insuportavel */
+let ambient = new Audio('ambient.mp3', 0.1, 'ambient', {loop: true})
+let music = new Audio('Songs/Music/Music1.mp3', 0.2, 'music', {loop: true})
+ambient.Play()
+music.Play();
+
+var game = new Game();
 
 var player = new Player(0, 0, 100, 100);
 var center = game.center(player);
 player.reset_position(center.x, center.y);
 
 player.name = "player";
-
 player.add_component("spriteanimator", new SpriteSheetAnimator(4,3));
-
 player.get("spriteanimator").assoc_animations(["idle","back","left","right"],  [0,1,2,3]);
-
 player.get("spriteanimator").set_current_animation("idle");
-
-// player2.get("spriteanimator").set_velocity(10);
-// player2.get("spriteanimator").play();
-
-// Multplayer.on('UpdatePlayers', data => {
-//     players = data
-//     for(let p in players){
-//         let valls = players[p]
-//         console.log(valls)
-//     }
-// })
 
 const load_callback = (img) => {
     player.get("spriteanimator").set_spritesheet(img);
@@ -51,11 +47,12 @@ player.get("audioplayer").add_sounds(
     {url: "./Songs/WalkSongs/Dirt/Walk1.mp3", volume: 1, audioname: "walk1", options: {loop: true}},
     {url: "./Songs/WalkSongs/Dirt/Walk2.mp3", volume: 1, audioname: "walk2", options: {loop: true}},
     {url: "./Songs/WalkSongs/Dirt/Walk3.mp3", volume: 1, audioname: "walk3", options: {loop: true}});
+
 player.get("audioplayer").set_current("walk1");
     
 loadSprite("sprite.png", load_callback);
     
-loadSprite("tile1.png", img => game.setbg(img));
+loadSprite("Img/water/water1.jpg", img => game.setbg(img));
     
 player.get("spriteanimator").set_velocity(10);
 player.get("spriteanimator").play();
@@ -90,27 +87,65 @@ let mapMatrix = [
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
+
+let treeMatrix = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
+
+for (let i = 1; i < treeMatrix[0].length-1; i++) {
+    for (let j = 1; j < treeMatrix.length-1; j++) {
+        treeMatrix[j][i] = Math.floor(Math.random() * 2);
+    }
+}
+
 //Ver isso aq
 let tileManager = new TileManager();
+let treeManager = new TileManager();
 
 let mapa = new Map(mapMatrix, tileManager, player.w);
+let tree = new Map(treeMatrix, treeManager, player.w);
+
+const genTree = (imglist) => {
+    treeManager.set(1, new Tile(imglist["Img/tree/tree1.png"], "tree"));
+    tree.generateMap();
+}
 
 const genMap = (imglist) => {
-    tileManager.set(0, new Tile(imglist["grama.jpg"], "grama"));
-    tileManager.set(1, new Tile(imglist["crate.png"], "crate"));
+    tileManager.set(0, new Tile(imglist["Img/grass/grama.jpg"], "grama"));
+    tileManager.set(1, new Tile(imglist["Img/sand/sand.png"], "crate"));
     tileManager.set(2, new Tile(imglist["tile1.png"], "thing"));
     mapa.generateMap();
 };
 
+
+
 //Ver isso aqui
-loadSprites(genMap, "crate.png", "tile1.png", "grama.jpg");
+loadSprites(genMap, "Img/sand/sand.png", "tile1.png", "Img/grass/grama.jpg");
+loadSprites(genTree, "Img/tree/tree1.png");
 
-let camera = new Camera(300, 300, player);
-                            
+let camera = new Camera(300, 300, player);                   
+
 mapa.enable_camera();
+tree.enable_camera();
 game.add_component("camera", camera);
+game.add_component("menu", new Interface(game))
+game.get("menu").add_element("Painel", new Panel(0,0,game.width, game.height, {color: "rgba(25, 25, 25, 0.5)"}))
 
-game.create_scene("scene1", new Scene(mapa));
+game.create_scene("scene1", new Scene(mapa, tree));
 game.set_current_scene("scene1");
 game.add_entity(player)
 game.main();

@@ -127,7 +127,10 @@ class Camera extends Component {
 
         this.x = this.lerp(this.x, this.target.x-(game.width/2-this.target.w/2), 0.1);
         this.y = this.lerp(this.y, this.target.y-(game.height/2-this.target.h/2), 0.1);
-        game.get_current_scene().map.apply_to_all(this.apply.bind(this));
+
+        for (let i = 0; i < game.get_current_scene().map.length; i++) {
+            game.get_current_scene().map[i].apply_to_all(this.apply.bind(this));
+        }
     }
 
     apply(entity) {
