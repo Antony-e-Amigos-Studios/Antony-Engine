@@ -27,11 +27,13 @@ music.Play();
 
 var game = new Game();
 
-var player = new Player(game.width / 2, game.height / 2, 100, 100);
+var player = new Player(0, 0, 100, 100);
 
 // bagulho mó inutil, é só centralizar o player normalmente ali po
-// var center = game.center(player);
-// player.reset_position(center.x, center.y);
+// pode fazer o favor de tomar no seu cu?
+
+var center = game.center(player);
+player.reset_position(center.x, center.y);
 
 player.name = "player";
 player.add_component("spriteanimator", new SpriteSheetAnimator(4, 3));
@@ -63,7 +65,7 @@ player.get("audioplayer").on_stop_callback(() => {
     let mov = player.get("movement");
     if (!mov.xspd && !mov.yspd) {
         player.get("audioplayer").stop();
-        player.get("audioplayer").set_current("", { on: true, from: ["walk1", "walk2", "walk3"] });
+        player.get("audioplayer").set_current("", { random: true, from: ["walk1", "walk2", "walk3"] });
     }
 });
 
@@ -171,7 +173,7 @@ let camera = new Camera(300, 300, player);
 mapa.enable_camera();
 tree.enable_camera();
 game.add_component("camera", camera);
-game.add_component("menu", new Interface(game))
+game.add_component("menu", new Interface(game));
 game.get("menu").add_element("Painel", new Panel(0, 0, game.width, game.height, { color: "rgba(25, 25, 25, 0.5)" }))
 
 game.add_entity(player);

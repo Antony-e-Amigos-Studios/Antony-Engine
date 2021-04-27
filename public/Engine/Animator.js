@@ -97,15 +97,25 @@ class Animator extends Component {
     
     update(ctx, parent) {
         if (this.get_frame() !== undefined && parent !== undefined) {
-            if (parent.has_component("camera")) {
-                parent.cx = parent.initial_x;
-                parent.cy = parent.initial_y;
-            }
+            this.set_cx_cy
             ctx.drawImage(this.get_frame(), parent.cx, parent.cy, parent.w, parent.h);
-                
         }
         if (this.playing) {
             this.update_frame();
+        }
+    }
+
+    set_cx_cy(parent) {
+        let execute = { "none": () => {},
+                        "both": () => {
+                            parent.cx = parent.initial_x;
+                            parent.cy = parent.initial_y;
+                        },
+                        "x": () => parent.cx = parent.initial_x,
+                        "y": () => parent.cy = parent.initial_y};
+
+        if (parent.has_component("camera") && parent.get("camera").info["enabled"]) {
+            execute[parent.get("camera").info["enabled"]]();
         }
     }
 
@@ -174,17 +184,14 @@ class SpriteSheetAnimator extends Animator {
     }
 
     update(ctx, parent) {
-        if (parent.has_component("camera")) {
-            parent.cx = parent.initial_x;
-            parent.cy = parent.initial_y;
-        }
+        this.set_cx_cy(parent);
         if (this.scale === undefined) this.scale = 1;
         if (this.spritesheet)
-            ctx.drawImage(this.spritesheet, this.srcX, this.srcY,
-                      this.sprite_width, this.sprite_height,
-                      parent.cx, parent.cy,
-                      this.sprite_width * this.scale,
-                      this.sprite_height * this.scale);
+            ctx.drawImage(  this.spritesheet, this.srcX, this.srcY,
+                            this.sprite_width, this.sprite_height,
+                            parent.cx, parent.cy,
+                            this.sprite_width * this.scale,
+                            this.sprite_height * this.scale  );
 
         if (this.playing) {
             this.update_frame();

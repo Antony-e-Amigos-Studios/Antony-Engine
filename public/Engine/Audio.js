@@ -55,8 +55,8 @@ class AudioPlayer extends Component {
         }
     }
 
-    set_current(audioname, choose_random={on: false, from: undefined}) {
-        if (!choose_random.on) {
+    set_current(audioname, choose_random={random: false, from: undefined}) {
+        if (!choose_random.random) {
             this.current = audioname in this.sounds ? audioname : this.current;
         } else if (choose_random.from) {
             let from = choose_random.from;

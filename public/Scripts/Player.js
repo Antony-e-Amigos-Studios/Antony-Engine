@@ -34,5 +34,13 @@ export default class Player extends GameObject {
         game.ctx.font = "30px Arial";
         game.ctx.fillStyle = "rgb(255,255,255)";
         game.ctx.fillText(`Fps: ${Math.floor(Fps())}`, 10, 100); // debug
+        
+        game.ctx.font = "30px Arial";
+        game.ctx.fillStyle = "rgb(255,255,255)";
+        game.ctx.fillText(this.get("camera").info["enabled"], 10, 200); // debug
+
+        game.ctx.font = "30px Arial";
+        game.ctx.fillStyle = "rgb(255,255,255)";
+        game.ctx.fillText(this.x, 10, 300); // debug
     }
 }

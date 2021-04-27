@@ -102,7 +102,11 @@ class Map {
     }
 }
 
-class EmptyComponent {
+class DataComponent {
+    constructor(info) {
+        this.info = info;
+    }
+
     update(){
         
     }
@@ -116,20 +120,42 @@ class Camera extends Component {
         this.y = 0;
         this.w = width
         this.h = height
-        this.target.add_component("camera", new EmptyComponent());
+        this.enabled = "both";
+        this.done_x = false; // vou arrumar um jeito melhor de fazer isso dps
+        this.done_y = false; 
+        this.target.add_component("camera", new DataComponent({"enabled": "both"}));
     }
 
     lerp(v0, v1, t) {
         return (1 - t) * v0 + t * v1;
     }
 
-    update(ctx, game) {
+    update(_ctx, game) {
+        let execute = { "none": () => {},
+                        "both": () => {
+                            this.x = this.lerp(this.x, this.target.x, 0.1);
+                            this.y = this.lerp(this.y, this.target.y, 0.1);
+                        },
+                        "x": () => this.x = this.lerp(this.x, this.target.x, 0.1),
+                        "y": () => this.y = this.lerp(this.y, this.target.y, 0.1) };
+                
+        execute[this.enabled]();
+                        // sim isso literalmente simula o match do rust
 
-        this.x = this.lerp(this.x, this.target.x-(game.width/2-this.target.w/2), 0.1);
-        this.y = this.lerp(this.y, this.target.y-(game.height/2-this.target.h/2), 0.1);
+        for (let i = 0; i < game.get_current_scene().layers.length; i++) {
+            game.get_current_scene().layers[i].apply_to_all(this.apply.bind(this));
+        }
 
-        for (let i = 0; i < game.get_current_scene().map.length; i++) {
-            game.get_current_scene().map[i].apply_to_all(this.apply.bind(this));
+        if (this.target.x <= game.width/2) {
+            this.disable('x');
+        } else {
+            this.enable('x');
+        }
+
+        if (this.target.y <= game.height/2) {
+            this.disable('y');            
+        } else {
+            this.enable('y');
         }
     }
 
@@ -137,11 +163,32 @@ class Camera extends Component {
         entity.move(this.x, this.y);
     }
 
-    move(map){
-        map.apply_to_all(data => {
-            data.x -= 1
-        })
+    disable(option= "both") {
+        let single = ['x', /* or */ 'y'];
+        let enabled = this.target.get("camera").info["enabled"];
+        
+        let inverse = {"both": "none", "x": "y", "y": "x", "none": "none"}; // none remains none
+
+        if (enabled == option) option = "none";
+        else if (inverse[option] != enabled && enabled != "both") option = "none";
+        else option = inverse[option];
+
+        this.enabled = option;
+        this.target.get("camera").info["enabled"] = option;
+    }
+
+    enable(option="both") {
+        let single = ['x', /* or */ 'y'];
+        let enabled = this.target.get("camera").info["enabled"];
+
+        if (single.includes(option) &&    // se opção for x ou y
+            single.includes(enabled) &&   // e x ou y já estiver ativado
+            enabled != option)            // e se o excluido não for igual a opção
+                option = "both";
+
+        this.enabled = option;
+        this.target.get("camera").info["enabled"] = option;
     }
 }
 
-export { TileManager, Map, Camera, EmptyComponent };
+export { TileManager, Map, Camera, DataComponent };

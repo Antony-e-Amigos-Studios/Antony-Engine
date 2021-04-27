@@ -9,7 +9,6 @@ export default class BasicMovement extends Component {
         this.parent = parent;
         this.keystates = {};
         this.keys = keys
-        this.isMovev = false;
 
         if (keys.length != 4) {
             throw new Error("must specify exactly 4 keys");
@@ -83,10 +82,6 @@ export default class BasicMovement extends Component {
                 break;
             }
         });
-    }
-
-    isMove(){
-        return this.isMovev
     }
 
     up() {
