@@ -185,6 +185,7 @@ class Camera extends Component {
             single.includes(enabled) &&   // e x ou y já estiver ativado
             enabled != option)            // e se o excluido não for igual a opção
                 option = "both";
+        else if (option != enabled && enabled != "none") option = "both";
 
         this.enabled = option;
         this.target.get("camera").info["enabled"] = option;

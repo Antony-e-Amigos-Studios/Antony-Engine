@@ -15,9 +15,6 @@ import { Interface, Panel } from './Engine/Interface.js'
     Sua utilização e obrigadorio 
 */
 
-
-Multplayer.create_connetion() //Não mecher!
-
 /* Não retirar, comentei pois a repedição do som era insuportavel */
 let ambient = new Audio('ambient.mp3', 0.1, 'ambient', { loop: true })
 let music = new Audio('Songs/Music/Theme1.mp3', 0.5, 'music', { loop: true })
