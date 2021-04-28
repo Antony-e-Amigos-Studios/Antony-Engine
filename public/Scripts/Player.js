@@ -25,9 +25,9 @@ export default class Player extends GameObject {
             if (!mov.xspd && !mov.yspd) {
                 this.get("spriteanimator").stop();
             } else {
-                Multplayer.emit('UpdatePlayer', Multplayer.getId(), {x:this.x, y:this.y, name:this.name, frame:this.get("spriteanimator").frame, current:this.get("spriteanimator").current})
                 this.get("audioplayer").play();
                 this.get("spriteanimator").play();
+                Multplayer.emit('UpdatePlayer', Multplayer.getId(),{x:this.x, y:this.y, name:this.name, frame:this.get("spriteanimator").frame, current:this.get("spriteanimator").current})
             }
         }
         

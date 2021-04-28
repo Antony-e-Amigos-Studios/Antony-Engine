@@ -39,12 +39,11 @@ player.get("spriteanimator").set_current_animation("idle");
 ////////////////////////////////// Multiplayer area //////////////////////////////
 let players = {} 
 /// n mexe
-Server.emit('NewPlayer', { x: player.x, y: player.y, name: player.name, current: player.get("spriteanimator").get_current(), frame: player.get("spriteanimator").get_frame()})
+Server.emit('NewPlayer', { x: player.x, y: player.y, name: player.name, current: player.get("spriteanimator").current, frame: player.get("spriteanimator").frame})
 
 Server.on('UpdatePlayers', data => {
     players = data
     var entity_list = [];
-
     for (let i in players){ // pqp ta 3 fps no meu KKKK
       let p = players[i]
       if(i == Server.getId()){
@@ -59,14 +58,13 @@ Server.on('UpdatePlayers', data => {
           gameObj.name = "player";
           gameObj.add_component("spriteanimator", new SpriteSheetAnimator(4, 3));
           gameObj.get("spriteanimator").assoc_animations(["idle", "back", "left", "right"], [0, 1, 2, 3]);
-          gameObj.get("spriteanimator").set_current_animation("idle");
           gameObj.get("spriteanimator").set_spritesheet(img_carregada) // CARAIO kkkkkkkkkkkk
           gameObj.get("spriteanimator").set_scale(3)
           gameObj.x = p.x;
           gameObj.y = p.y; // ta bugado k
+          gameObj.get("spriteanimator").set_current_animation(p.current);
           gameObj.get("spriteanimator").set_frame(p.frame);
-          if(p.animation)
-            gameObj.get("spriteanimator").set_current_animation(p.animation);
+          // console.log(gameObj)
           entity_list.push(gameObj);
         }
       } //tu sabe atualizar os sprites sem pressisar do 
