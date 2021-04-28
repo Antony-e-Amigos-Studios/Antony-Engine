@@ -16,7 +16,6 @@ import { Interface, Panel } from './Engine/Interface.js'
     Sua utilização e obrigadorio 
 */
 
-
 Server.create_connetion() //Não mecher!
 
 new Audio('ambient.mp3', 0.1, 'ambient', { loop: true }).Play()
@@ -35,9 +34,25 @@ player.get("spriteanimator").set_current_animation("idle");
 /**
  * A @function on_load_sprits e executada apos o carregamento dos sprits 
 */
-const on_load_sprits = (img) => {
+
+////////////////////////////////// Multplayer area //////////////////////////////
+let players = [] 
+
+Server.emit('NewPlayer', { x: player.x, y: player.y, name: player.name, current: player.get("spriteanimator").current, frame: player.get("spriteanimator").frame })
+// onde q tu 
+Server.on('UpdatePlayers', data => {
+    let keys = Object.keys(data);
+    for (let i = 0; i < keys.length; i++) {
+        players
+    }
+})
+
+var img_carregada = undefined;
+
+const on_load_sprites = (img) => {
     player.get("spriteanimator").set_spritesheet(img);
-    player.get("spriteanimator").set_scale(3);
+    player.get("spriteanimator").set_scale(3);      
+    img_carregada = img;
 };
 
 player.add_component("audioplayer", new AudioPlayer());
@@ -45,14 +60,15 @@ player.get("audioplayer").add_sounds(
     { url: "./Songs/WalkSongs/Dirt/Walk1.mp3", volume: 1, audioname: "walk1", options: { loop: true } },
     { url: "./Songs/WalkSongs/Dirt/Walk2.mp3", volume: 1, audioname: "walk2", options: { loop: true } },
     { url: "./Songs/WalkSongs/Dirt/Walk3.mp3", volume: 1, audioname: "walk3", options: { loop: true } });
-
+    
 player.get("audioplayer").set_current("walk1");
 
-loadSprite("sprite.png", on_load_sprits);
+loadSprite("sprite.png", on_load_sprites);
 loadSprite("Img/water/water1.jpg", img => game.setbg(img));
 
 player.get("spriteanimator").set_velocity(10);
 player.get("spriteanimator").play();
+player.add_component('movement', new BasicMovement(player, 6))
 
 player.get("audioplayer").on_stop_callback(() => {
     const mov = player.get("movement");
@@ -61,11 +77,6 @@ player.get("audioplayer").on_stop_callback(() => {
         player.get("audioplayer").set_current("", { random: true, from: ["walk1", "walk2", "walk3"] });
     }
 });
-
-// <---------- Inutiu no momento (não apagar) ---------->
-// Server.emit('NewPlayer', { x: player.x, y: player.y, name: player.name, current: player.get("spriteanimator").current, frame: player.get("spriteanimator").frame })
-
-player.add_component("movement", new BasicMovement(player, 5));
 
 ////////////////////////////Renderização do mapa///////////////////////////////////
 import mapMatrix from './Matrixs/mapMatrix.js'
@@ -127,4 +138,4 @@ game.create_scene("scene1", new Scene(
 ));
 
 game.set_current_scene("scene1");
-game.main();
+game.main()

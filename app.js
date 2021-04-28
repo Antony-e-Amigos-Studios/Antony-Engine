@@ -8,6 +8,7 @@ let PORT = 3000
 app.use(express.static(__dirname + "/public/"))
 
 server.listen(PORT, () => {
+    console.clear()
     console.log(`Servidor inciado em http://localhost:${PORT}`)
 })
 
