@@ -1,5 +1,5 @@
 import Game from "./Engine/Game.js";
-import Player from "./Scripts/pl";
+import Player from "./Scripts/Player.js";
 import { SpriteSheetAnimator, loadSprite, loadSprites } from "./Engine/Animator.js";
 import { Camera, TileManager, Map } from "./Engine/Map.js";
 import BasicMovement from "./Engine/miscComponents.js";
