@@ -34,12 +34,12 @@ class Map {
         this.game
     }
 
-    LoadGame(game){
+    LoadGame(game) {
         this.game = game
     }
 
     get_limits() {
-        return {x: this.tilesize * this.w, y: this.tilesize * this.h};
+        return { x: this.tilesize * this.w, y: this.tilesize * this.h };
     } // ta funcionando sim olha
     // tesuke ainda nao ta funcionando a parte de baixo
     // recarrega pq ta funcionando de boa
@@ -61,7 +61,7 @@ class Map {
         }
     }
 
-    generateEntitys(ctx){
+    generateEntitys(ctx) {
         this.entitys.forEach(e => {
             e.update(this.game)
             e.position_update()
@@ -69,11 +69,11 @@ class Map {
         })
     }
 
-    add_entity(entity){
+    add_entity(entity) {
         this.entitys.push(entity)
     }
 
-    add_entitys(...entity){
+    add_entitys(...entity) {
         entity.forEach(e => {
             this.entitys.push(e)
         })
@@ -114,8 +114,8 @@ class DataComponent {
         this.info = info;
     }
 
-    update(){
-        
+    update() {
+
     }
 }
 
@@ -135,18 +135,39 @@ class Camera extends Component {
 
     update(_ctx, game) { // a va toma no cu fodase ta consertado isso q import vadia gasosoa
         // acabou, fim, caso encerrado, voltem para as suas casas
+        // max.x = max.x - game.width / 2;
+        // max.y = max.y - game.height / 2;
+        // // fixed 100% gamer
+        // // max steel
+        // if (this.target.y > game.height/2 && this.target.y < max.y) {
+        //     this.y = this.lerp(this.y, this.target.y - Math.round(game.height / 2), 0.1); // 
+        // }
+        // if (this.target.x > game.width/2 && this.target.x < max.x) {
+        //     this.x = this.lerp(this.x, this.target.x-Math.round(game.width/2), 0.1);
+        // }
+
+
+        /*
+         _____ _                         _____         _    _
+        /  __ \ |                       |_   _|       | |  (_)
+        | /  \/ |__  _   _ _ __   __ _    | |___ _   _| | ___
+        | |   | '_ \| | | | '_ \ / _` |   | / __| | | | |/ / |
+        | \__/\ | | | |_| | |_) | (_| |   | \__ \ |_| |   <| |
+        \____/ _| |_|\__,_| .__/ \__,_|   \_/___/\__,_|_|\_\_|
+                          | |
+                          |_|                                 
+        */
+
         let max = game.get_current_scene().layers[0].get_limits();
-        max.x = max.x - game.width/2;
-        max.y = max.y - game.height/2;
-        // fixed 100% gamer
-        // max steel
-        if (this.target.y > game.height/2 && this.target.y < max.y) {
-            this.y = this.lerp(this.y, this.target.y - Math.round(game.height / 2), 0.1); // 
-        }
-        if (this.target.x > game.width/2 && this.target.x < max.x) {
-            this.x = this.lerp(this.x, this.target.x-Math.round(game.width/2), 0.1);
-        }
-        
+        this.x = this.lerp(this.x, this.target.x - Math.round(game.width / 2), 0.1);
+        this.y = this.lerp(this.y, this.target.y - Math.round(game.height / 2), 0.1);
+
+        this.x = Math.max(0, this.x);
+        this.y = Math.max(0, this.y);
+        this.x = Math.min(max.x - game.width, this.x);
+        this.y = Math.min(max.y - game.height, this.y);
+
+
         for (let i = 0; i < game.get_current_scene().layers.length; i++) {
             game.get_current_scene().layers[i].apply_to_all(this.apply.bind(this));
             game.apply_to_all_entities(this.apply.bind(this));

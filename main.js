@@ -23,8 +23,8 @@ music.Play();
 
 var game = new Game();
 
-var center = game.center({x: 0, y: 0, w: 100, h: 100});
-var player = new Player(center.x, center.y, 100, 100);
+var center = game.center({ x: 0, y: 0, w: 100, h: 100 });
+var player = new Player(2000, 2000, 100, 100);
 
 // bagulho mó inutil, é só centralizar o player normalmente ali po
 // pode fazer o favor de tomar no seu cu?
