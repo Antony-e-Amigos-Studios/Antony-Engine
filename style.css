@@ -1,6 +1,12 @@
+@font-face {
+  font-family: FixedSys;
+  src: url('Img/FSEX300.ttf');
+}
+
 *{
     overflow: hidden;
 }
+
 
 canvas{
     image-rendering: optimizeQuality;

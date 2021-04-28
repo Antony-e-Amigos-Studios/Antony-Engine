@@ -5,7 +5,7 @@ export default class Player extends GameObject {
     constructor(x, y, w, h) {
         super(x, y, w, h);
     }
-    
+
     update(game) {
         if (this.get("movement")) {
             let mov = this.get("movement");
@@ -28,13 +28,13 @@ export default class Player extends GameObject {
                 this.get("spriteanimator").play();
             }
         }
-        
-        game.ctx.font = "30px Arial";
+
+        game.ctx.font = "40px FixedSys";
         game.ctx.fillStyle = "rgb(255,255,255)";
         game.ctx.fillText(`Fps: ${Math.floor(Fps())}`, 10, 100); // debug
-        
-        game.ctx.font = "30px Arial";
-        game.ctx.fillStyle = "rgb(255,255,255)";
-        game.ctx.fillText(this.x, 10, 300); // debug
+
+        // game.ctx.font = "30px Arial";
+        // game.ctx.fillStyle = "rgb(255,255,255)";
+        // game.ctx.fillText(this.x, 10, 300); // debug
     }
 }
