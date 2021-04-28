@@ -3,13 +3,12 @@ import Component from './Component.js'
 const RAIZ_DE_DOIS = Math.sqrt(2);
 
 export default class BasicMovement extends Component {
-    constructor(parent, velocity, keys) {
+    constructor(parent, velocity, keys=["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]) {
         super();
-        keys = keys == null || undefined ? ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"] : keys
+        keys = keys
         this.parent = parent;
         this.keystates = {};
         this.keys = keys
-        this.isMovev = false;
 
         if (keys.length != 4) {
             throw new Error("must specify exactly 4 keys");
@@ -83,10 +82,6 @@ export default class BasicMovement extends Component {
                 break;
             }
         });
-    }
-
-    isMove(){
-        return this.isMovev
     }
 
     up() {

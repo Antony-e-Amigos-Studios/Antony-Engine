@@ -1,5 +1,6 @@
 *{
     overflow: hidden;
+    margin: 0;
 }
 
 canvas{
@@ -10,7 +11,12 @@ canvas{
     -ms-interpolation-mode: nearest-neighbor;
 }
 
+#element{
+    position: fixed;
+    background-color: transparent;
+}
+
 body {
-    background-color: #444;
+    background-color: rgb(68, 68, 68);
     margin: 0%;
 }

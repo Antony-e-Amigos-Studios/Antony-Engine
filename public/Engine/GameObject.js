@@ -39,7 +39,7 @@ class GameObject extends NonEntityGameObject {
         this.cy = y;
         this.w = w;
         this.h = h;
-        this.name = name;
+        // this.name = name; <----------------inutiu no momento!--------------->
     }
 
     clone() {
@@ -56,12 +56,8 @@ class GameObject extends NonEntityGameObject {
         this.initial_y = y;
     }
 
-    update() {
-        
-    }
+    update() {}
 
-    // Getters and setters
-    
     setPosition(x, y) {
         this.x = x;
         this.y = y;

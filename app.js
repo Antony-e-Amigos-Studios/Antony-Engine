@@ -3,11 +3,12 @@ const app = express()
 const server = require('http').createServer(app)
 const { Server } = require('socket.io')
 const io = new Server(server)
+let PORT = 3000
 
 app.use(express.static(__dirname + "/public/"))
 
-server.listen(3000, () => {
-    console.log('Servidor inciado em http://localhost:3000')
+server.listen(PORT, () => {
+    console.log(`Servidor inciado em http://localhost:${PORT}`)
 })
 
 /////////////////////////////////////////////////////////////

@@ -6,11 +6,22 @@ import Component from './Component.js'
     Toda ideia e bem vinda :)
 */
 class Interface extends Component{
-    constructor(game, options=null){
+    constructor(x, y, w, h, options=null){
         super()
         this.elements = {}
-        this.game = game
         this.options = options
+        this.x = x
+        this.y = y
+        this.w = w
+        this.h = h
+        let canvasNew = document.createElement('canvas')
+        canvasNew.width = w
+        canvasNew.height = h
+        canvasNew.style.marginLeft = x
+        canvasNew.style.marginTop = y
+        canvasNew.id = "element"
+        document.querySelector('body').appendChild(canvasNew)
+        this.ctx = canvasNew.getContext('2d')
     }
 
     add_element(name, element){
@@ -18,19 +29,15 @@ class Interface extends Component{
     }
 
     update(ctx, game) {
-        // if (this.elements.lenght != 1) {
-        //     this.elements.drawElement();
-        // } else {
-        //     for (let e in this.elements){
-        //         e.drawElement()
-        //     }
-        // }
-        // this.elements.drawElement(ctx)
+        this.ctx.clearRect(this.x, this.y, this.w, this.h)
+        for(let i in this.elements){
+            this.elements[i].drawElement(this.ctx)
+        }
     }
 }
 
 class Element {
-    constructor(x=0, y=0, w=10, h=10, options=null){
+    constructor(x, y, w, h, options=null){
         this.x = x
         this.y = y
         this.w = w
@@ -45,8 +52,8 @@ class Panel extends Element{
     }
 
     drawElement(ctx){
-        ctx.fillRect(this.x, this.y, this.w, this.h)
         ctx.fillStyle = this.options?.color
+        ctx.fillRect(this.x, this.y, this.w, this.h)
     }
 }
 

@@ -2,13 +2,13 @@ import Component from './Component.js'
 
 class Audio {
     constructor(url, volume=1, audioName, options){
-        this.volume = volume
         this.options = options
         this.audioName = audioName
 
         let audio = document.createElement('audio')
         let source = document.createElement('source')
         
+        this.audio = audio
         audio.volume = volume;
         audio.loop = options?.loop || false;
         audio.id = audioName;
@@ -19,25 +19,20 @@ class Audio {
     }
 
     Play(){
-        let audio = document.getElementById(this.audioName)
-        audio.play()    
+        this.audio.play()    
     }
     
     Pause(){
-        let audio = document.getElementById(this.audioName)
-        audio.pause()
+        this.audio.pause()
     }
 
     Stop(){
-        let audio = document.getElementById(this.audioName)
-        audio.pause()
-        audio.currentTime = 0
+        this.audio.pause()
+        this.audio.currentTime = 0
     }
 
     SetVolume(volume){
-        let audio = document.getElementById(this.audioName)
-        audio.volume = volume
-        this.volume = volume
+        this.audio.volume = volume
     }
 }
 
@@ -55,11 +50,11 @@ class AudioPlayer extends Component {
         }
     }
 
-    set_current(audioname, choose_random={on: false, from: undefined}) {
-        if (!choose_random.on) {
+    set_current(audioname, choose_random={random: false, from: undefined}) {
+        if (!choose_random.random) {
             this.current = audioname in this.sounds ? audioname : this.current;
         } else if (choose_random.from) {
-            let from = choose_random.from;
+            const from = choose_random.from;
             this.set_current(from[Math.floor(Math.random() * from.length)]);
         }
     }
@@ -94,9 +89,7 @@ class AudioPlayer extends Component {
         this.playing = false;
     }
 
-    update(ctx, game) {
-
-    }
+    update() {}
 }
 
 export { Audio, AudioPlayer };

@@ -1,6 +1,6 @@
 import { GameObject } from "../Engine/GameObject.js"
 import Fps from '../Engine/Fps.js'
-import Multplayer from '../Engine/Multplayer.js'
+import Multplayer from '../Engine/Server.js'
 
 export default class Player extends GameObject {
     constructor(x, y, w, h) {
@@ -33,6 +33,6 @@ export default class Player extends GameObject {
         
         game.ctx.font = "30px Arial";
         game.ctx.fillStyle = "rgb(255,255,255)";
-        game.ctx.fillText(`Fps: ${Math.floor(Fps())}`, 10, 100); // debug
+        game.ctx.fillText(`Fps: ${Math.floor(Fps())}, Camera:${this.get('camera').info["enabled"]}, x:${Math.floor(this.x)} y:${Math.floor(this.y)}`, 10, 100); // debug
     }
 }

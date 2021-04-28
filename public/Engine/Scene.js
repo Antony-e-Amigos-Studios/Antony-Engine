@@ -1,13 +1,12 @@
 export default class Scene {
-    constructor(...generatedMap) {
-        this.map = [...generatedMap];
-        // this.map.push(generatedMap);
+    constructor(...generatedMaps) {
+        this.layers = [...generatedMaps];
 
     }
 
     update(ctx) {
-        for (let i = 0; i < this.map.length; i++) {
-            this.map[i].update(ctx);
+        for (let i = 0; i < this.layers.length; i++) {
+            this.layers[i].update(ctx);
         }
     }
 }
