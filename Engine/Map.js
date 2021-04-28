@@ -38,6 +38,13 @@ class Map {
         this.game = game
     }
 
+    get_limits() {
+        return {x: this.tilesize * this.w, y: this.tilesize * this.h};
+    } // ta funcionando sim olha
+    // tesuke ainda nao ta funcionando a parte de baixo
+    // recarrega pq ta funcionando de boa
+    // boa gososa se liga em como eu consertei
+    // merece um push
     generateMap() {
         for (let i = 0; i < this.h; i++) {
             for (let j = 0; j < this.w; j++) {
@@ -128,10 +135,15 @@ class Camera extends Component {
 
     update(_ctx, game) { // a va toma no cu fodase ta consertado isso q import vadia gasosoa
         // acabou, fim, caso encerrado, voltem para as suas casas
-        if (this.target.y > game.height/2) {
+        let max = game.get_current_scene().layers[0].get_limits();
+        max.x = max.x - game.width/2;
+        max.y = max.y - game.height/2;
+        // fixed 100% gamer
+        // max steel
+        if (this.target.y > game.height/2 && this.target.y < max.y) {
             this.y = this.lerp(this.y, this.target.y - Math.round(game.height / 2), 0.1); // 
         }
-        if (this.target.x > game.width/2) {
+        if (this.target.x > game.width/2 && this.target.x < max.x) {
             this.x = this.lerp(this.x, this.target.x-Math.round(game.width/2), 0.1);
         }
         
