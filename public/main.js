@@ -26,7 +26,7 @@ const game = new Game();
 var center = game.center({ x: 0, y: 0, w: 100, h: 100 });
 var player = new Player(center.x, center.y, 100, 100);
 
-player.name = "player";
+player.name = "lol"
 player.add_component("spriteanimator", new SpriteSheetAnimator(4, 3));
 player.get("spriteanimator").assoc_animations(["idle", "back", "left", "right"], [0, 1, 2, 3]);
 player.get("spriteanimator").set_current_animation("idle");
@@ -53,7 +53,7 @@ Server.on('UpdatePlayers', data => {
         if(!players[i].gameObject){
           players[i].gameObject = new Player(p.x, p.y, p.w, p.h);
         }// 
-        let gameObj = players[i].gameObject
+        let gameObj = p.gameObject
         if (img_carregada) {
           gameObj.name = "player";
           gameObj.add_component("spriteanimator", new SpriteSheetAnimator(4, 3));
@@ -62,24 +62,24 @@ Server.on('UpdatePlayers', data => {
           gameObj.get("spriteanimator").set_scale(3)
           gameObj.x = p.x;
           gameObj.y = p.y; // ta bugado k
-          gameObj.get("spriteanimator").set_current_animation(p.current);
           gameObj.get("spriteanimator").set_frame(p.frame);
-          // console.log(gameObj)
+          gameObj.get("spriteanimator").set_current_animation(p.current);
           entity_list.push(gameObj);
         }
-      } //tu sabe atualizar os sprites sem pressisar do 
-    } // sei toppppppp sim vei q foda nmrl SS MUTIO prs kkkkkk, muito
-    // deve ser foda implementar qualquer coisa ao som dessa musica epica
+      } 
+    }
+
     game.entities = entity_list;
+    
     game.add_entity(player); // ta quase manoooo) 
-})
+}) // n tem gameobj aí fora
 
 var img_carregada = undefined;
 
 const on_load_sprites = (img) => {
     player.get("spriteanimator").set_spritesheet(img);
-    player.get("spriteanimator").set_scale(3); 
-    img_carregada = img;
+    player.get("spriteanimator").set_scale(3);
+    img_carregada = img; //calma ae
 };
 
 player.add_component("audioplayer", new AudioPlayer());

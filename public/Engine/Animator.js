@@ -172,10 +172,12 @@ class SpriteSheetAnimator extends Animator {
             this.srcY = this.animations[this.current] * this.sprite_height;
         }
 
-        this.counter += this.inc;
-        if (Math.floor(this.counter) == 1) {
-            this.next_frame();
-            this.counter = 0;
+        if (this.playing) {
+          this.counter += this.inc;
+          if (Math.floor(this.counter) == 1) {
+              this.next_frame();
+              this.counter = 0;
+          }
         }
     }
 
@@ -184,6 +186,7 @@ class SpriteSheetAnimator extends Animator {
     }
 
     update(ctx, parent) {
+      this.update_frame();
         if (this.scale === undefined) this.scale = 1;
         if (this.spritesheet)
             ctx.drawImage(  this.spritesheet, this.srcX, this.srcY,
@@ -191,10 +194,6 @@ class SpriteSheetAnimator extends Animator {
                             parent.cx, parent.cy,
                             this.sprite_width * this.scale,
                             this.sprite_height * this.scale  );
-
-        if (this.playing) {
-            this.update_frame();
-        }
     }
 }
 
