@@ -6,7 +6,6 @@ import BasicMovement from "./Engine/miscComponents.js";
 import Scene from "./Engine/Scene.js"
 import Tile from "./Engine/Tile.js"
 import { Audio, AudioPlayer } from './Engine/Audio.js'
-import Multplayer from './Engine/Multplayer.js'
 import { Interface, Panel } from './Engine/Interface.js'
 
 /**
@@ -68,8 +67,6 @@ player.get("audioplayer").on_stop_callback(() => {
         player.get("audioplayer").set_current("", { random: true, from: ["walk1", "walk2", "walk3"] });
     }
 });
-
-Multplayer.emit('NewPlayer', { x: player.x, y: player.y, name: player.name, current: player.get("spriteanimator").current, frame: player.get("spriteanimator").frame })
 
 player.add_component("movement", new BasicMovement(player, 5));
 

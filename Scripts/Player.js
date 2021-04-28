@@ -1,6 +1,5 @@
 import { GameObject } from "../Engine/GameObject.js"
 import Fps from '../Engine/Fps.js'
-import Multplayer from '../Engine/Multplayer.js'
 
 export default class Player extends GameObject {
     constructor(x, y, w, h) {
@@ -25,7 +24,6 @@ export default class Player extends GameObject {
             if (!mov.xspd && !mov.yspd) {
                 this.get("spriteanimator").stop();
             } else {
-                Multplayer.emit('UpdatePlayer', Multplayer.getId(), {x:this.x, y:this.y, name:this.name, current:this.get("spriteanimator").current, frame:this.get("spriteanimator").frame})
                 this.get("audioplayer").play();
                 this.get("spriteanimator").play();
             }
