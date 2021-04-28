@@ -53,6 +53,18 @@ class Animator extends Component {
         this.current = name;
     }
 
+    get_current(){
+      return this.current
+    }
+
+    get_frame(){
+      return this.frame
+    }
+
+    set_frame(num) {
+      this.frame = num;
+    }
+
     add_animation(name) {
         this.animations[name] = [];
     }
@@ -147,6 +159,7 @@ class SpriteSheetAnimator extends Animator {
     }
 
     get_frame() {
+      return {frame: this.frame, animation: this.current};
     }
 
     set_scale(scale) {

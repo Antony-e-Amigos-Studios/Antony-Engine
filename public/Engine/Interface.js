@@ -52,7 +52,7 @@ class Panel extends Element {
     }
 
     drawElement(ctx){
-        ctx.fillStyle = this.options?.color
+        ctx.fillStyle = this.options?.color;
         ctx.fillRect(this.x, this.y, this.w, this.h)
     }
 }

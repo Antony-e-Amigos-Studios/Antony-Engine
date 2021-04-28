@@ -1,4 +1,4 @@
-export default class Multplayer{
+export default class Server {
     static create_connetion(){
         this.socket = io()
     }
@@ -14,4 +14,4 @@ export default class Multplayer{
     static on(frequency, fc){
         this.socket.on(frequency, fc)
     }
-}
+} // ata cool

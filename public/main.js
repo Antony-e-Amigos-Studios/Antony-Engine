@@ -1,5 +1,5 @@
 import Game from "./Engine/Game.js";
-import Player from "./Scripts/Player.js";
+import Player from "./Scripts/pl";
 import { SpriteSheetAnimator, loadSprite, loadSprites } from "./Engine/Animator.js";
 import { Camera, TileManager, Map } from "./Engine/Map.js";
 import BasicMovement from "./Engine/miscComponents.js";
@@ -34,24 +34,53 @@ player.get("spriteanimator").set_current_animation("idle");
 /**
  * A @function on_load_sprits e executada apos o carregamento dos sprits 
 */
+//FOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+//AE CARALHOOOOOOOOOOOOOOOO
+////////////////////////////////// Multiplayer area //////////////////////////////
+let players = {} 
+/// n mexe
+Server.emit('NewPlayer', { x: player.x, y: player.y, name: player.name, current: player.get("spriteanimator").get_current(), frame: player.get("spriteanimator").get_frame()})
 
-////////////////////////////////// Multplayer area //////////////////////////////
-let players = [] 
-
-Server.emit('NewPlayer', { x: player.x, y: player.y, name: player.name, current: player.get("spriteanimator").current, frame: player.get("spriteanimator").frame })
-// onde q tu 
 Server.on('UpdatePlayers', data => {
-    let keys = Object.keys(data);
-    for (let i = 0; i < keys.length; i++) {
-        players
-    }
+    players = data
+    var entity_list = [];
+
+    for (let i in players){ // pqp ta 3 fps no meu KKKK
+      let p = players[i]
+      if(i == Server.getId()){
+        delete players[i]; //vamo dar uns console
+        // ok 
+      }else{ // acho q tem que logar ao msm tempo sla pq senao n vai
+        if(!players[i].gameObject){
+          players[i].gameObject = new Player(p.x, p.y, p.w, p.h);
+        }// 
+        let gameObj = players[i].gameObject
+        if (img_carregada) {
+          gameObj.name = "player";
+          gameObj.add_component("spriteanimator", new SpriteSheetAnimator(4, 3));
+          gameObj.get("spriteanimator").assoc_animations(["idle", "back", "left", "right"], [0, 1, 2, 3]);
+          gameObj.get("spriteanimator").set_current_animation("idle");
+          gameObj.get("spriteanimator").set_spritesheet(img_carregada) // CARAIO kkkkkkkkkkkk
+          gameObj.get("spriteanimator").set_scale(3)
+          gameObj.x = p.x;
+          gameObj.y = p.y; // ta bugado k
+          gameObj.get("spriteanimator").set_frame(p.frame);
+          if(p.animation)
+            gameObj.get("spriteanimator").set_current_animation(p.animation);
+          entity_list.push(gameObj);
+        }
+      } //tu sabe atualizar os sprites sem pressisar do 
+    } // sei toppppppp sim vei q foda nmrl SS MUTIO prs kkkkkk, muito
+    // deve ser foda implementar qualquer coisa ao som dessa musica epica
+    game.entities = entity_list;
+    game.add_entity(player); // ta quase manoooo) 
 })
 
 var img_carregada = undefined;
 
 const on_load_sprites = (img) => {
     player.get("spriteanimator").set_spritesheet(img);
-    player.get("spriteanimator").set_scale(3);      
+    player.get("spriteanimator").set_scale(3); 
     img_carregada = img;
 };
 
