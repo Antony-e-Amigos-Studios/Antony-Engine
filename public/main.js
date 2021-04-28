@@ -26,10 +26,13 @@ const game = new Game();
 
 const player = new Player(0, 0, 100, 100);
 
+var player = new Player(0, 0, 100, 100);
+
 // bagulho mó inutil, é só centralizar o player normalmente ali po
 // pode fazer o favor de tomar no seu cu?
 
 const center = game.center(player);
+var center = game.center(player);
 player.reset_position(center.x, center.y);
 
 player.name = "player";

@@ -46,7 +46,7 @@ class Element {
     }
 }
 
-class Panel extends Element{
+class Panel extends Element {
     constructor(x, y, w, h, options){
         super(x, y, w, h, options)
     }
