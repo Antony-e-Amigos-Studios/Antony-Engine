@@ -137,8 +137,8 @@ for (let i = 3; i < treeMatrix.length; i++) {
 let tileManager = new TileManager();
 let treeManager = new TileManager();
 
-let mapa = new Map(mapMatrix, tileManager, player.w);
-let tree = new Map(treeMatrix, treeManager, player.w);
+let mapa = new Map(mapMatrix, tileManager, player.w+1);
+let tree = new Map(treeMatrix, treeManager, player.w+1);
 
 const genTree = (imglist) => {
     treeManager.set(1, new Tile(imglist["Img/tree/tree1.png"], "tree"));
