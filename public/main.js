@@ -34,9 +34,11 @@ player.get("spriteanimator").set_current_animation("idle");
 /**
  * A @function on_load_sprits e executada apos o carregamento dos sprits 
 */
-//FOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-//AE CARALHOOOOOOOOOOOOOOOO
-////////////////////////////////// Multiplayer area //////////////////////////////
+
+/**
+ * Multplayer feito por SrAnonimo e Tsuk
+ * @author SrAnonimo and Tsuk
+ */
 let players = {} 
 /// n mexe
 Server.emit('NewPlayer', { x: player.x, y: player.y, name: player.name, current: player.get("spriteanimator").current, frame: player.get("spriteanimator").frame})
