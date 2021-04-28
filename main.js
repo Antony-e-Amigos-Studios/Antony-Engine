@@ -23,13 +23,11 @@ music.Play();
 
 var game = new Game();
 
-var player = new Player(0, 0, 100, 100);
+var center = game.center({x: 0, y: 0, w: 100, h: 100});
+var player = new Player(center.x, center.y, 100, 100);
 
 // bagulho mó inutil, é só centralizar o player normalmente ali po
 // pode fazer o favor de tomar no seu cu?
-
-var center = game.center(player);
-player.reset_position(center.x, center.y);
 
 player.name = "player";
 player.add_component("spriteanimator", new SpriteSheetAnimator(4, 3));

@@ -37,6 +37,12 @@ export default class Game extends NonEntityGameObject {
         this.background = img;
     }
 
+    apply_to_all_entities(f) {
+        for (let ent of this.entities) {
+            f(ent);
+        }
+    }
+
     gameLoop() {
         if (this === undefined) {
             return undefined;
@@ -79,9 +85,9 @@ export default class Game extends NonEntityGameObject {
         }
     }
 
-    center(entity) {
-        return {x:(this.width/2 - entity.w/2) + entity.x,
-                y:(this.height/2 - entity.h/2) + entity.y};
+    center(dim) {
+        return {x:(this.width/2 - dim.w/2) + dim.x,
+                y:(this.height/2 - dim.h/2) + dim.y};
     }
 
     main() {
