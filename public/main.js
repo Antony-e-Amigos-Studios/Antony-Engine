@@ -24,13 +24,8 @@ new Audio('Songs/Music/Theme1.mp3', 0.5, 'music', { loop: true }).Play()
 
 const game = new Game();
 
-const player = new Player(0, 0, 100, 100);
-
-// bagulho mó inutil, é só centralizar o player normalmente ali po
-// pode fazer o favor de tomar no seu cu?
-
-const center = game.center(player);
-player.reset_position(center.x, center.y);
+var center = game.center({ x: 0, y: 0, w: 100, h: 100 });
+var player = new Player(center.x, center.y, 100, 100);
 
 player.name = "player";
 player.add_component("spriteanimator", new SpriteSheetAnimator(4, 3));

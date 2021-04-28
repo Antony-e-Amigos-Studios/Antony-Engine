@@ -39,6 +39,8 @@ class Animator extends Component {
         this.anim_state = 0;
         this.animations = {};
         this.counter = 0;
+        this.done_x = false;
+        this.done_y = true;
         this.playing = false;
         this.vel = 1;
         this.inc = this.vel / 100;
@@ -90,32 +92,17 @@ class Animator extends Component {
     }
 
     adjust_size(gameobj) {
-        const img = this.get_frame();
+        let img = this.get_frame();
         gameobj.w = img.width;
         gameobj.h = img.height;
     }
     
     update(ctx, parent) {
         if (this.get_frame() !== undefined && parent !== undefined) {
-            this.set_cx_cy
             ctx.drawImage(this.get_frame(), parent.cx, parent.cy, parent.w, parent.h);
         }
         if (this.playing) {
             this.update_frame();
-        }
-    }
-
-    set_cx_cy(parent) {
-        const execute = { "none": () => {},
-                        "both": () => {
-                            parent.cx = parent.initial_x;
-                            parent.cy = parent.initial_y;
-                        },
-                        "x": () => parent.cx = parent.initial_x,
-                        "y": () => parent.cy = parent.initial_y};
-
-        if (parent.has_component("camera") && parent.get("camera").info["enabled"]) {
-            execute[parent.get("camera").info["enabled"]]();
         }
     }
 
@@ -184,7 +171,6 @@ class SpriteSheetAnimator extends Animator {
     }
 
     update(ctx, parent) {
-        this.set_cx_cy(parent);
         if (this.scale === undefined) this.scale = 1;
         if (this.spritesheet)
             ctx.drawImage(  this.spritesheet, this.srcX, this.srcY,

@@ -1,5 +1,4 @@
 
-
 class NonEntityGameObject {
     constructor() {
         this.components = {};
@@ -39,7 +38,8 @@ class GameObject extends NonEntityGameObject {
         this.cy = y;
         this.w = w;
         this.h = h;
-        // this.name = name; <----------------inutiu no momento!--------------->
+        this.no_position_update = false;
+        this.name = name; // inutil por enquanto
     }
 
     clone() {
@@ -47,8 +47,16 @@ class GameObject extends NonEntityGameObject {
     }
 
     position_update() {
-        this.cx = this.x;
-        this.cy = this.y;
+        if (!this.no_position_update) {
+            this.cx = this.x;
+            this.cy = this.y;
+        }
+        this.no_position_update = false; // re-enabling position updates
+                                         // genius 666 IQ lol 69 420
+    }
+
+    skip_next_position_update() {
+        this.no_position_update = true;
     }
 
     reset_position(x, y) {
@@ -56,8 +64,12 @@ class GameObject extends NonEntityGameObject {
         this.initial_y = y;
     }
 
-    update() {}
+    update() {
+        
+    }
 
+    // Getters and setters
+    
     setPosition(x, y) {
         this.x = x;
         this.y = y;
