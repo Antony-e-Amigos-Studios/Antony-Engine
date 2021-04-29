@@ -10,6 +10,7 @@ export default class Game extends NonEntityGameObject {
         super();
         this.xspd = 0;
         this.yspd = 0;
+        this.texts = {};
         this.entities = [];
         this.background = undefined;
         this.scenes = {};
@@ -57,6 +58,15 @@ export default class Game extends NonEntityGameObject {
             ent.position_update();
             ent.update_components(this.ctx);
         }
+
+        for (let text in this.texts) {
+          this.ctx.font = "arial";
+          this.ctx.fillStyle = "rgb(255,255,255)";
+          let tt = this.texts[text];
+          for (let i = 0; i < tt.txts.length; i++) { // sim isso aconteceu
+            this.ctx.fillText(tt.txts[i], 10, tt.ypos[i]);
+          }
+        }
         
         window.requestAnimationFrame(this.gameLoop);
     }
@@ -69,6 +79,10 @@ export default class Game extends NonEntityGameObject {
         delete this.entities[entity]
     }
 
+    get_text(name) {
+      return name in this.texts;
+    }
+
     create_scene(name, scene) {
         this.scenes[name] = scene;
     }
@@ -77,6 +91,14 @@ export default class Game extends NonEntityGameObject {
         if (this.scene !== "") {
             return this.scenes[this.scene];
         }
+    }
+
+    create_text(name) {
+      this.texts[name] = "";
+    }
+
+    set_text(name, value) {
+      this.texts[name] = value;
     }
 
     set_current_scene(name) {

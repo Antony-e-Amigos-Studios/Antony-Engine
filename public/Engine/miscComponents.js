@@ -99,4 +99,8 @@ export default class BasicMovement extends Component {
     right() {
         return this.keys[1];
     }
+
+    set_spd(spd) {
+      this.speed = spd;
+    }
 }

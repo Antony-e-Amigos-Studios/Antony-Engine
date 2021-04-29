@@ -31,8 +31,8 @@ export default class Player extends GameObject {
             }
         }
         
-        // game.ctx.font = "30px Arial";
-        // game.ctx.fillStyle = "rgb(255,255,255)";
-        // game.ctx.fillText(Fps(), 10, 100); // debug
+        game.ctx.font = "15px monospace";
+        game.ctx.fillStyle = "rgb(255,255,255)";
+        game.ctx.fillText(this.name, this.cx, this.cy); // debug
     }
 }

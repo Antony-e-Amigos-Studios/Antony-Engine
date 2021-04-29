@@ -26,7 +26,27 @@ const game = new Game();
 var center = game.center({ x: 0, y: 0, w: 100, h: 100 });
 var player = new Player(center.x, center.y, 100, 100);
 
-player.name = "lol"
+var buf = [];
+// gasosa
+// c vai v a gambiarra pera
+player.name = "guest";
+// tem q ter o window?
+
+document.addEventListener("keydown", (e) => {
+  if (e.key == "e") {
+    let msg = window.prompt("type something be nice");
+    let re = /setspd\{([0-9]{0,2})\}/;
+    let match = re.exec(msg);
+    if (match != null) {
+      console.log(parseInt(match[0]))
+      player.get("movement").set_spd(parseInt(match[0]))
+    }
+    Server.emit('chat', {sender: player.name, msg: msg});
+  }
+}); // senpai delicioso
+
+player.name = window.prompt("type ur name: press e to chat");
+
 player.add_component("spriteanimator", new SpriteSheetAnimator(4, 3));
 player.get("spriteanimator").assoc_animations(["idle", "back", "left", "right"], [0, 1, 2, 3]);
 player.get("spriteanimator").set_current_animation("idle");
@@ -43,6 +63,21 @@ let players = {}
 /// n mexe
 Server.emit('NewPlayer', { x: player.x, y: player.y, name: player.name, current: player.get("spriteanimator").current, frame: player.get("spriteanimator").frame})
 
+var pos = [100];
+
+Server.on('chatmsg', data => {
+  buf.push(`${data.sender}: ${data.msg}`); 
+  pos.push(pos[pos.length-1]+30);
+  if (pos[pos.length-1] > 600) {
+    pos = [100]; // clear chat
+    buf = [];
+  }
+  if (!game.get_text("chat")) {
+    game.create_text("chat");
+  }
+  game.set_text("chat", {txts: buf, ypos: pos});
+})
+
 Server.on('UpdatePlayers', data => {
     players = data
     var entity_list = [];
@@ -57,7 +92,7 @@ Server.on('UpdatePlayers', data => {
         }// 
         let gameObj = p.gameObject
         if (img_carregada) {
-          gameObj.name = "player";
+          gameObj.name = p.name;
           gameObj.add_component("spriteanimator", new SpriteSheetAnimator(4, 3));
           gameObj.get("spriteanimator").assoc_animations(["idle", "back", "left", "right"], [0, 1, 2, 3]);
           gameObj.get("spriteanimator").set_spritesheet(img_carregada) // CARAIO kkkkkkkkkkkk

@@ -28,6 +28,10 @@ io.on('connection', socket => {
         io.emit('UpdatePlayers', players)
     })
 
+    socket.on('chat', data => {
+        io.emit('chatmsg', data)
+    })
+
     socket.on('disconnect', ()=> {
         delete players[socket.id]
         io.emit('UpdatePlayers', players)
