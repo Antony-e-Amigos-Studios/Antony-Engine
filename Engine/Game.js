@@ -58,15 +58,6 @@ export default class Game extends NonEntityGameObject {
             ent.position_update();
             ent.update_components(this.ctx);
         }
-
-        for (let text in this.texts) {
-          this.ctx.font = "arial";
-          this.ctx.fillStyle = "rgb(255,255,255)";
-          let tt = this.texts[text];
-          for (let i = 0; i < tt.txts.length; i++) { // sim isso aconteceu
-            this.ctx.fillText(tt.txts[i], 10, tt.ypos[i]);
-          }
-        }
         
         window.requestAnimationFrame(this.gameLoop);
     }
